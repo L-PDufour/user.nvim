@@ -4,10 +4,9 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
-vim.o.updatetime = 50
+vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
 vim.keymap.set('n', '<leader>e', ':Explore<CR>')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
