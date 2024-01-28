@@ -6,9 +6,9 @@
 vim.o.hlsearch = false
 
 -- Make line numbers default
-vim.wo.umber = true
+vim.wo.relativenumber = true
 
--- Enable mouse mode
+--fEnable mouse mode
 vim.o.mouse = 'a'
 
 -- Sync clipboard between OS and Neovim.
