@@ -1,5 +1,72 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
+-- You can add your own plugins here or in other files in this directory! I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {}
+return {
+	{
+		"shortcuts/no-neck-pain.nvim",
+		version = "*",
+		config = function()
+			vim.keymap.set("n", "<leader>zm", ":NoNeckPain<CR>", { desc = "[Z]en [m]ode" })
+		end,
+	},
+	{
+		"theprimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("harpoon"):setup()
+		end,
+		keys = {
+			{
+				"<leader>ha",
+				function()
+					require("harpoon"):list():append()
+				end,
+				desc = "harpoon file",
+			},
+			{
+				"<leader>he",
+				function()
+					local harpoon = require("harpoon")
+					harpoon.ui:toggle_quick_menu(harpoon:list())
+				end,
+				desc = "harpoon quick menu",
+			},
+			{
+				"<leader>1",
+				function()
+					require("harpoon"):list():select(1)
+				end,
+				desc = "harpoon to file 1",
+			},
+			{
+				"<leader>2",
+				function()
+					require("harpoon"):list():select(2)
+				end,
+				desc = "harpoon to file 2",
+			},
+			{
+				"<leader>3",
+				function()
+					require("harpoon"):list():select(3)
+				end,
+				desc = "harpoon to file 3",
+			},
+			{
+				"<leader>4",
+				function()
+					require("harpoon"):list():select(4)
+				end,
+				desc = "harpoon to file 4",
+			},
+			{
+				"<leader>5",
+				function()
+					require("harpoon"):list():select(5)
+				end,
+				desc = "harpoon to file 5",
+			},
+		},
+	},
+}
