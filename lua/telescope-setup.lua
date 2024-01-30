@@ -2,6 +2,11 @@
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    layout_strategy = 'horizontal',
+    layout_config = {
+      prompt_position = 'top',
+    },
+    sorting_strategy = 'ascending',
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -9,8 +14,13 @@ require('telescope').setup {
       },
     },
   },
-    extensions = {
-    ["ui-select"]  = {
+  pickers = {
+    find_files = {
+      hidden = true
+    },
+  },
+  extensions = {
+    ["ui-select"] = {
       require("telescope.themes").get_dropdown {
         -- even more opts
       }
@@ -102,7 +112,8 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-vim.keymap.set( "n", "<space>sy", ":Telescope file_browser<CR>", { noremap = true })
-vim.keymap.set( 'n', '<leader>:', '<cmd>Telescope cmdline<cr>', {desc = 'Cmdline'})
+vim.keymap.set("n", "<space>se", ":Telescope file_browser<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<space>sE", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
+vim.keymap.set('n', '<leader>:', '<cmd>Telescope cmdline<cr>', { desc = 'Cmdline' })
 
 -- vim: ts=2 sts=2 sw=2 et
