@@ -3,6 +3,29 @@
 -- See the kickstart.nvim README for more information
 return {
 	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			vim.keymap.set("n", "<leader>xt", function()
+				require("trouble").toggle()
+			end)
+
+			vim.keymap.set("n", "[t", function()
+				require("trouble").next({ skip_groups = true, jump = true });
+			end)
+
+			vim.keymap.set("n", "]t", function()
+				require("trouble").previous({ skip_groups = true, jump = true });
+			end)
+		end
+	},
+	{
+		"mbbill/undotree",
+		config = function()
+			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndotree" })
+		end,
+	},
+	{
 		"github/copilot.vim",
 		config = function()
 			vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {

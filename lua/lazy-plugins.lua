@@ -8,7 +8,7 @@ require("lazy").setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  "tpope/vim-fugitive",
+  -- "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
 
   -- Detect tabstop and shiftwidth automatically
@@ -141,16 +141,25 @@ require("lazy").setup({
     -- Set lualine as statusline
     "nvim-lualine/lualine.nvim",
     -- See `:help lualine.txt`
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = "tokyonight",
         component_separators = "|",
         section_separators = "",
       },
+      sections = {},
+      tabline = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'hostname', 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
     },
   },
-
   {
     -- Add indentation guides even on blank lines
     "lukas-reineke/indent-blankline.nvim",
@@ -199,7 +208,7 @@ require("lazy").setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-   require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.autoformat',
   require("kickstart.plugins.debug"),
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
