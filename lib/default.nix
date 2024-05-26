@@ -7,7 +7,7 @@ in rec {
     pkgs = legacyPackages.${system};
   in
     buildVimPlugin {
-      name = "TheAltF4Stream";
+      name = "user";
       postInstall = ''
         rm -rf $out/.envrc
         rm -rf $out/.gitignore
@@ -24,7 +24,7 @@ in rec {
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
     pkgs = legacyPackages.${system};
-    TheAltF4Stream-nvim = mkVimPlugin {inherit system;};
+    user-nvim = mkVimPlugin {inherit system;};
   in [
     # languages
     vimPlugins.nvim-lspconfig
@@ -32,7 +32,8 @@ in rec {
     vimPlugins.rust-tools-nvim
     vimPlugins.vim-just
     vimPlugins.vim-nickel
-
+    vimPlugins.nvim-cmp
+    vimPlugins.luasnip
     # telescope
     vimPlugins.plenary-nvim
     vimPlugins.telescope-nvim
@@ -42,7 +43,7 @@ in rec {
 
     # floaterm
     vimPlugins.vim-floaterm
-
+    vimPlugins.mini-nvim
     # extras
     vimPlugins.ChatGPT-nvim
     vimPlugins.comment-nvim
@@ -58,9 +59,9 @@ in rec {
     vimPlugins.omnisharp-extended-lsp-nvim
     vimPlugins.rainbow-delimiters-nvim
     vimPlugins.trouble-nvim
-
+    vimPlugins.cmp-nvim-lsp
     # configuration
-    TheAltF4Stream-nvim
+    user-nvim
   ];
 
   mkExtraPackages = {system}: let
@@ -110,7 +111,7 @@ in rec {
 
   mkExtraConfig = ''
     lua << EOF
-      require 'TheAltF4Stream'
+      require 'user'
     EOF
   '';
 
