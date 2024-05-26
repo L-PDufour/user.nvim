@@ -1,1 +1,2 @@
-require("user")
+-- init.lua
+require("user").init()
