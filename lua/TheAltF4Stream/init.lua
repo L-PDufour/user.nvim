@@ -1,14 +1,9 @@
-local function init()
-	require("TheAltF4Stream.vim").init()
-	require("TheAltF4Stream.theme").init()
-	require("TheAltF4Stream.languages").init()
-	require("TheAltF4Stream.telescope").init()
-	require("TheAltF4Stream.floaterm").init()
-	require("TheAltF4Stream.chatgpt").init()
-	require("TheAltF4Stream.copilot").init()
-	require("TheAltF4Stream.print").init()
-end
-
-return {
-	init = init,
-}
+-- require("TheAltF4Stream.vim")
+-- require("TheAltF4Stream.theme")
+-- require("TheAltF4Stream.languages")
+-- require("TheAltF4Stream.telescope")
+-- require("TheAltF4Stream.floaterm")
+-- require("TheAltF4Stream.chatgpt")
+-- require("TheAltF4Stream.copilot")
+-- require("TheAltF4Stream.print")
+require("TheAltF4Stream.kickstart")

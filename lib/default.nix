@@ -1,16 +1,6 @@
 {inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
 in rec {
-  mkCopilotChat = {system}: let
-    inherit (pkgs) vimUtils;
-    inherit (vimUtils) buildVimPlugin;
-    pkgs = legacyPackages.${system};
-  in
-    buildVimPlugin {
-      name = "CopilotChat";
-      src = inputs.copilotchat;
-    };
-
   mkVimPlugin = {system}: let
     inherit (pkgs) vimUtils;
     inherit (vimUtils) buildVimPlugin;
@@ -33,7 +23,6 @@ in rec {
 
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
-    CopilotChat-nvim = mkCopilotChat {inherit system;};
     pkgs = legacyPackages.${system};
     TheAltF4Stream-nvim = mkVimPlugin {inherit system;};
   in [
@@ -55,7 +44,6 @@ in rec {
     vimPlugins.vim-floaterm
 
     # extras
-    CopilotChat-nvim
     vimPlugins.ChatGPT-nvim
     vimPlugins.comment-nvim
     vimPlugins.copilot-lua
@@ -122,7 +110,7 @@ in rec {
 
   mkExtraConfig = ''
     lua << EOF
-      require 'TheAltF4Stream'.init()
+      require 'TheAltF4Stream'
     EOF
   '';
 
