@@ -1,9 +1,18 @@
 -- options.lua
 
+-- local M = {}
+-- local function init()
+-- end
+-- M.init = init
+-- return M
+
+local M = {}
 local function init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
-	vim.cmd([[colorscheme tokyonight]])
+	-- vim.cmd([[colorscheme tokyonight]])
+	-- vim.cmd([[colorscheme catppuccin]])
+
 	-- General settings
 	vim.o.updatetime = 100 -- Faster completion
 
@@ -63,6 +72,63 @@ local function init()
 	vim.o.timeoutlen = 300
 	vim.o.list = true
 	vim.o.hlsearch = true -- Highlight search results
+
+	local normal_mode_mappings = {
+		-- Clear search results with Esc
+		["<Esc>"] = { ":noh<CR>", { noremap = true, silent = true } },
+
+		-- Fix 'Y' behavior to yank till the end of the line
+		["Y"] = { "y$", { noremap = true, silent = true } },
+
+		-- Switch between the two most recent files with Ctrl+c
+		["<C-c>"] = { ":b#<CR>", { noremap = true, silent = true } },
+
+		-- Close the current buffer with Ctrl+x
+		["<C-x>"] = { ":close<CR>", { noremap = true, silent = true } },
+
+		-- Save file with Space+s or Ctrl+s
+		["<C-s>"] = { ":w<CR>", { noremap = true, silent = true } },
+
+		-- Navigate to left/right window with leader key
+		["<leader>h"] = { "<C-w>h", { noremap = true, silent = true } }, -- Move to the left window
+		["<leader>l"] = { "<C-w>l", { noremap = true, silent = true } }, -- Move to the right window
+
+		-- Jump to the start/end of a line with H/L
+		["L"] = { "$", { noremap = true, silent = true } }, -- Jump to the end of the line
+		["H"] = { "^", { noremap = true, silent = true } }, -- Jump to the start of the line
+
+		-- Resize windows with arrow keys
+		["<C-Up>"] = { ":resize -2<CR>", { noremap = true, silent = true } }, -- Decrease window height
+		["<C-Down>"] = { ":resize +2<CR>", { noremap = true, silent = true } }, -- Increase window height
+		["<C-Left>"] = { ":vertical resize +2<CR>", { noremap = true, silent = true } }, -- Increase window width
+		["<C-Right>"] = { ":vertical resize -2<CR>", { noremap = true, silent = true } }, -- Decrease window width
+
+		-- Move current line up/down with Alt+K/J
+		["<M-k>"] = { ":move-2<CR>", { noremap = true, silent = true } }, -- Move line up
+		["<M-j>"] = { ":move+<CR>", { noremap = true, silent = true } }, -- Move line down
+	}
+
+	-- Define key mappings for Visual mode
+	local visual_mode_mappings = {
+		-- Better indenting in visual mode
+		[">"] = { ">gv", { noremap = true, silent = true } }, -- Indent right and reselect
+		["<"] = { "<gv", { noremap = true, silent = true } }, -- Indent left and reselect
+		["<TAB>"] = { ">gv", { noremap = true, silent = true } }, -- Indent right and reselect
+		["<S-TAB>"] = { "<gv", { noremap = true, silent = true } }, -- Indent left and reselect
+
+		-- Move selected lines up/down in visual mode
+		["K"] = { ":m '<-2<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines up
+		["J"] = { ":m '>+1<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines down
+	}
+
+	-- Set key mappings for Normal and Visual modes
+	for key, value in pairs(normal_mode_mappings) do
+		vim.keymap.set("n", key, value[1], value[2])
+	end
+
+	for key, value in pairs(visual_mode_mappings) do
+		vim.keymap.set("v", key, value[1], value[2])
+	end
 end
 
 return {

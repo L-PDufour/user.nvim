@@ -30,13 +30,18 @@ in rec {
     vimPlugins.nvim-cmp
     vimPlugins.luasnip
     vimPlugins.cmp-nvim-lsp
+    vimPlugins.conform-nvim
+    vimPlugins.lsp-format-nvim
 
     # Fuzzy finding
     vimPlugins.plenary-nvim
     vimPlugins.telescope-nvim
-
+    vimPlugins.telescope-ui-select-nvim
+    vimPlugins.telescope-file-browser-nvim
+    vimPlugins.telescope-fzf-native-nvim
     # Theme
     vimPlugins.tokyonight-nvim
+    vimPlugins.catppuccin-nvim
 
     # Git integration
     vimPlugins.gitsigns-nvim
@@ -49,6 +54,8 @@ in rec {
 
     # File explorer
     vimPlugins.nvim-tree-lua
+    # Lualine
+    vimPlugins.lualine-nvim
     user-nvim
   ];
 
@@ -58,13 +65,16 @@ in rec {
       config.allowUnfree = true;
     };
   in [
-    pkgs.gopls
     pkgs.ripgrep
+    pkgs.gopls
+    pkgs.lua-language-server
   ];
 
   mkExtraConfig = ''
     lua << EOF
       require("user").init()
+    vim.cmd("set runtimepath+=./ftplugin")
+
     EOF
   '';
 
