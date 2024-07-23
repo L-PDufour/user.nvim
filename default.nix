@@ -27,11 +27,16 @@ in rec {
   in [
     # Essential language support
     vimPlugins.nvim-lspconfig
-    vimPlugins.nvim-cmp
     vimPlugins.luasnip
-    vimPlugins.cmp-nvim-lsp
     vimPlugins.conform-nvim
     vimPlugins.lsp-format-nvim
+
+    #CMP
+    vimPlugins.nvim-cmp
+    vimPlugins.cmp-nvim-lsp
+    vimPlugins.cmp-cmdline
+    vimPlugins.cmp-path
+    vimPlugins.cmp-buffer
 
     # Fuzzy finding
     vimPlugins.plenary-nvim
@@ -68,6 +73,7 @@ in rec {
     pkgs.ripgrep
     pkgs.gopls
     pkgs.lua-language-server
+    pkgs.stylua
   ];
 
   mkExtraConfig = ''

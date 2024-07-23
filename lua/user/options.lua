@@ -6,7 +6,6 @@
 -- M.init = init
 -- return M
 
-local M = {}
 local function init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
