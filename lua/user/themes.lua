@@ -1,7 +1,5 @@
-local M = {}
 local catppuccin = require("catppuccin")
 
-local function init()
 	catppuccin.setup({
 		flavour = "mocha", -- Choose the Mocha variant
 		-- Other settings can be added here
@@ -11,7 +9,4 @@ local function init()
 	})
 
 	-- Apply the colorscheme
-	vim.cmd([[colorscheme catppuccin]])
-end
-M.init = init
-return M
+	vim.cmd.colorscheme("catppuccin")

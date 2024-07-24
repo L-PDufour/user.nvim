@@ -1,11 +1,15 @@
-{inputs, ...}: let
+{ inputs, ... }:
+let
   inherit (inputs.nixpkgs) legacyPackages;
-in rec {
-  mkVimPlugin = {system}: let
-    inherit (pkgs) vimUtils;
-    inherit (vimUtils) buildVimPlugin;
-    pkgs = legacyPackages.${system};
-  in
+in
+rec {
+  mkVimPlugin =
+    { system }:
+    let
+      inherit (pkgs) vimUtils;
+      inherit (vimUtils) buildVimPlugin;
+      pkgs = legacyPackages.${system};
+    in
     buildVimPlugin {
       name = "user";
       postInstall = ''
@@ -20,68 +24,77 @@ in rec {
       '';
       src = ./.;
     };
-  mkNeovimPlugins = {system}: let
-    inherit (pkgs) vimPlugins;
-    pkgs = legacyPackages.${system};
-    user-nvim = mkVimPlugin {inherit system;};
-  in [
-    # Essential language support
-    vimPlugins.nvim-lspconfig
-    vimPlugins.luasnip
-    vimPlugins.conform-nvim
-    vimPlugins.lsp-format-nvim
+  mkNeovimPlugins =
+    { system }:
+    let
+      inherit (pkgs) vimPlugins;
+      pkgs = legacyPackages.${system};
+      user-nvim = mkVimPlugin { inherit system; };
+    in
+    [
+      # LSP
+      vimPlugins.nvim-lspconfig
+      vimPlugins.luasnip
+      vimPlugins.conform-nvim
+      vimPlugins.lsp-format-nvim
+      vimPlugins.typescript-tools-nvim
 
-    #CMP
-    vimPlugins.nvim-cmp
-    vimPlugins.cmp-nvim-lsp
-    vimPlugins.cmp-cmdline
-    vimPlugins.cmp-path
-    vimPlugins.cmp-buffer
-    vimPlugins.lspkind-nvim
+      #CMP
+      vimPlugins.nvim-cmp
+      vimPlugins.cmp-nvim-lsp
+      vimPlugins.cmp-cmdline
+      vimPlugins.cmp-path
+      vimPlugins.cmp-buffer
+      vimPlugins.lspkind-nvim
 
-    # Fuzzy finding
-    vimPlugins.plenary-nvim
-    vimPlugins.telescope-nvim
-    vimPlugins.telescope-ui-select-nvim
-    vimPlugins.telescope-file-browser-nvim
-    vimPlugins.telescope-fzf-native-nvim
-    # Theme
-    vimPlugins.tokyonight-nvim
-    vimPlugins.catppuccin-nvim
+      # Fuzzy finding
+      vimPlugins.plenary-nvim
+      vimPlugins.telescope-nvim
+      vimPlugins.telescope-ui-select-nvim
+      vimPlugins.telescope-file-browser-nvim
+      vimPlugins.telescope-fzf-native-nvim
+      # Theme
+      vimPlugins.catppuccin-nvim
 
-    # Git integration
-    vimPlugins.gitsigns-nvim
+      # Git integration
+      vimPlugins.gitsigns-nvim
 
-    # Treesitter for better syntax highlighting
-    vimPlugins.nvim-treesitter.withAllGrammars
+      # Treesitter for better syntax highlighting
+      vimPlugins.nvim-treesitter.withAllGrammars
 
-    # Icons
-    vimPlugins.nvim-web-devicons
+      # Icons
+      vimPlugins.nvim-web-devicons
 
-    # File explorer
-    vimPlugins.nvim-tree-lua
-    # Lualine
-    vimPlugins.lualine-nvim
-    # Others
-    vimPlugins.vim-fugitive
-    vimPlugins.better-escape-nvim
-    vimPlugins.which-key-nvim
-    vimPlugins.lazygit-nvim
-    vimPlugins.gitsigns-nvim
-    user-nvim
-  ];
+      # File explorer
+      # Lualine
+      # Others
+      vimPlugins.mini-nvim
+      vimPlugins.vim-fugitive
+      vimPlugins.better-escape-nvim
+      vimPlugins.which-key-nvim
+      vimPlugins.lazygit-nvim
+      vimPlugins.gitsigns-nvim
+      user-nvim
+    ];
 
-  mkExtraPackages = {system}: let
-    pkgs = import inputs.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in [
-    pkgs.ripgrep
-    pkgs.gopls
-    pkgs.lua-language-server
-    pkgs.stylua
-  ];
+  mkExtraPackages =
+    { system }:
+    let
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    [
+      pkgs.gopls
+      pkgs.lua-language-server
+      pkgs.nixfmt-rfc-style
+      pkgs.vscode-langservers-extracted
+      pkgs.nodePackages_latest.prettier
+      pkgs.prettierd
+      pkgs.ripgrep
+      pkgs.stylua
+    ];
 
   mkExtraConfig = ''
     lua << EOF
@@ -91,16 +104,20 @@ in rec {
     EOF
   '';
 
-  mkNeovim = {system}: let
-    inherit (pkgs) lib neovim;
-    extraPackages = mkExtraPackages {inherit system;};
-    pkgs = legacyPackages.${system};
-    start = mkNeovimPlugins {inherit system;};
-  in
+  mkNeovim =
+    { system }:
+    let
+      inherit (pkgs) lib neovim;
+      extraPackages = mkExtraPackages { inherit system; };
+      pkgs = legacyPackages.${system};
+      start = mkNeovimPlugins { inherit system; };
+    in
     neovim.override {
       configure = {
         customRC = mkExtraConfig;
-        packages.main = {inherit start;};
+        packages.main = {
+          inherit start;
+        };
       };
       extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath extraPackages}"'';
       withNodeJs = true;
@@ -109,12 +126,19 @@ in rec {
     };
 
   # You can keep this if you want to use it with home-manager
-  mkHomeManager = {system}: {
-    programs.neovim = {
-      enable = true;
+  mkHomeManager =
+    { system }:
+    let
       extraConfig = mkExtraConfig;
-      extraPackages = mkExtraPackages {inherit system;};
-      plugins = mkNeovimPlugins {inherit system;};
+      extraPackages = mkExtraPackages { inherit system; };
+      plugins = mkNeovimPlugins { inherit system; };
+    in
+    {
+      inherit extraConfig extraPackages plugins;
+      defaultEditor = true;
+      enable = true;
+      withNodeJs = true;
+      withPython3 = true;
+      withRuby = true;
     };
-  };
 }

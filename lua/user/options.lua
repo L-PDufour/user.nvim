@@ -1,13 +1,4 @@
--- options.lua
 
--- local M = {}
--- local function init()
--- end
--- M.init = init
--- return M
-
-local M = {}
-local function init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 	-- vim.cmd([[colorscheme tokyonight]])
@@ -147,7 +138,7 @@ local function init()
 	}
 	local shared_mappings = {
 		["<leader>p"] = { [["_dP]], { desc = "Paste over selection without yanking" } },
-		["<C-s>"] = { ":w<CR>", { noremap = true, silent = true } },
+		["<C-s>"] = { "<Esc>:w<CR>", { noremap = true, silent = true } },
 		["<C-x>"] = { ":close<CR>", { noremap = true, silent = true } },
 		["<C-c>"] = { ":b#<CR>", { noremap = true, silent = true } },
 	}
@@ -161,10 +152,6 @@ local function init()
 	end
 
 	for key, value in pairs(shared_mappings) do
-		vim.keymap.set({ "n", "v" }, key, value[1], value[2])
+		vim.keymap.set({ "n", "v", "i" }, key, value[1], value[2])
 	end
-end
 
-M.init = init
-
-return M
