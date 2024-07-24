@@ -6,6 +6,7 @@
 -- M.init = init
 -- return M
 
+local M = {}
 local function init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
@@ -72,6 +73,10 @@ local function init()
 	vim.o.list = true
 	vim.o.hlsearch = true -- Highlight search results
 
+	-- Primestuff
+	vim.opt.softtabstop = 4
+	vim.opt.smartindent = true
+
 	local normal_mode_mappings = {
 		-- Clear search results with Esc
 		["<Esc>"] = { ":noh<CR>", { noremap = true, silent = true } },
@@ -80,13 +85,10 @@ local function init()
 		["Y"] = { "y$", { noremap = true, silent = true } },
 
 		-- Switch between the two most recent files with Ctrl+c
-		["<C-c>"] = { ":b#<CR>", { noremap = true, silent = true } },
 
 		-- Close the current buffer with Ctrl+x
-		["<C-x>"] = { ":close<CR>", { noremap = true, silent = true } },
 
 		-- Save file with Space+s or Ctrl+s
-		["<C-s>"] = { ":w<CR>", { noremap = true, silent = true } },
 
 		-- Navigate to left/right window with leader key
 		["<leader>h"] = { "<C-w>h", { noremap = true, silent = true } }, -- Move to the left window
@@ -105,6 +107,28 @@ local function init()
 		-- Move current line up/down with Alt+K/J
 		["<M-k>"] = { ":move-2<CR>", { noremap = true, silent = true } }, -- Move line up
 		["<M-j>"] = { ":move+<CR>", { noremap = true, silent = true } }, -- Move line down
+
+		--LazyGit
+		["<leader>gg"] = { "<cmd>LazyGit<cr>", { desc = "LazyGit" } },
+
+		--Primestuff
+		["J"] = { "mzJ`z", { desc = "Join lines and keep cursor position" } },
+		["<C-d>"] = { "<C-d>zz", { desc = "Scroll down and center cursor" } },
+		["<C-u>"] = { "<C-u>zz", { desc = "Scroll up and center cursor" } },
+		["n"] = { "nzzzv", { desc = "Next search result and center view" } },
+		["N"] = { "Nzzzv", { desc = "Previous search result and center view" } },
+		["<leader>y"] = { [["+y]], { desc = "Yank to system clipboard" } },
+		["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
+		["<leader>d"] = { [["_d]], { desc = "Delete without yanking" } },
+		["<C-k>"] = { "<cmd>cnext<CR>zz", { desc = "Next quickfix item and center" } },
+		["<C-j>"] = { "<cmd>cprev<CR>zz", { desc = "Previous quickfix item and center" } },
+		["<leader>k"] = { "<cmd>lnext<CR>zz", { desc = "Next location list item and center" } },
+		["<leader>j"] = { "<cmd>lprev<CR>zz", { desc = "Previous location list item and center" } },
+		["<leader>s"] = {
+			[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+			{ desc = "Search and replace word under cursor" },
+		},
+		-- ["<leader>x"] = { "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" } },
 	}
 
 	-- Define key mappings for Visual mode
@@ -118,8 +142,15 @@ local function init()
 		-- Move selected lines up/down in visual mode
 		["K"] = { ":m '<-2<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines up
 		["J"] = { ":m '>+1<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines down
+		["<leader>y"] = { [["+y]], { desc = "Yank selection to system clipboard" } },
+		["<leader>d"] = { [["_d]], { desc = "Delete selection without yanking" } },
 	}
-
+	local shared_mappings = {
+		["<leader>p"] = { [["_dP]], { desc = "Paste over selection without yanking" } },
+		["<C-s>"] = { ":w<CR>", { noremap = true, silent = true } },
+		["<C-x>"] = { ":close<CR>", { noremap = true, silent = true } },
+		["<C-c>"] = { ":b#<CR>", { noremap = true, silent = true } },
+	}
 	-- Set key mappings for Normal and Visual modes
 	for key, value in pairs(normal_mode_mappings) do
 		vim.keymap.set("n", key, value[1], value[2])
@@ -128,8 +159,12 @@ local function init()
 	for key, value in pairs(visual_mode_mappings) do
 		vim.keymap.set("v", key, value[1], value[2])
 	end
+
+	for key, value in pairs(shared_mappings) do
+		vim.keymap.set({ "n", "v" }, key, value[1], value[2])
+	end
 end
 
-return {
-	init = init,
-}
+M.init = init
+
+return M

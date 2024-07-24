@@ -27,11 +27,15 @@ local function init()
 			sorting_strategy = "ascending",
 		},
 		extensions = {
-			file_browser = {
+			["lazygit"] = {
+				enable = true,
+			},
+			["file_browser"] = {
 				enable = true,
 			},
 			["ui-select"] = {
 				enable = true,
+				themes.get_dropdown(),
 			},
 			["fzf-native"] = {
 				enable = true,
@@ -43,108 +47,62 @@ local function init()
 	telescope.load_extension("file_browser")
 	telescope.load_extension("ui-select")
 	telescope.load_extension("fzf")
+	telescope.load_extension("lazygit")
 	-- telescope.load_extension("undo")
 
 	-- Keymaps
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>?",
-		'<cmd>lua require("telescope.builtin").oldfiles()<CR>',
-		{ noremap = true, silent = true, desc = "[?] Find recently opened files" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader><space>",
-		'<cmd>lua require("telescope.builtin").buffers()<CR>',
-		{ noremap = true, silent = true, desc = "[ ] Find existing buffers" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sf",
-		'<cmd>lua require("telescope.builtin").find_files()<CR>',
-		{ noremap = true, silent = true, desc = "[f]iles" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sh",
-		'<cmd>lua require("telescope.builtin").help_tags()<CR>',
-		{ noremap = true, silent = true, desc = "[h]elp" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sw",
-		'<cmd>lua require("telescope.builtin").grep_string()<CR>',
-		{ noremap = true, silent = true, desc = "[w]ord" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sg",
-		'<cmd>lua require("telescope.builtin").live_grep()<CR>',
-		{ noremap = true, silent = true, desc = "[g]rep" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sd",
-		'<cmd>lua require("telescope.builtin").diagnostics()<CR>',
-		{ noremap = true, silent = true, desc = "[d]iagnostics" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sD",
-		'<cmd>lua require("telescope.builtin").diagnostics{}<CR>',
-		{ noremap = true, silent = true, desc = "[D]iagnostics" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>sk",
-		'<cmd>lua require("telescope.builtin").keymaps()<CR>',
-		{ noremap = true, silent = true, desc = "[k]eymaps" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>dw",
-		'<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
-		{ noremap = true, silent = true, desc = "[w]orkspace symbols" }
-	)
-	vim.api.nvim_set_keymap(
-		"n",
-		"<leader>/",
-		'<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({winblend = 10, previewer = false}))<CR>',
-		{ noremap = true, silent = true, desc = "[/] current buffer fuzzy find" }
-	)
-	vim.api.nvim_set_keymap(
+	vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+	vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+	vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+	vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+	vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+	vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+	vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+	vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+	vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+	vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+	vim.keymap.set("n", "<leader>/", function()
+		builtin.current_buffer_fuzzy_find(themes.get_dropdown({ winblend = 10, previewer = false }))
+	end, { desc = "[/] current buffer fuzzy find" })
+	vim.keymap.set("n", "<leader>s/", function()
+		builtin.live_grep({
+			grep_open_files = true,
+			prompt_title = "Live Grep in Open Files",
+		})
+	end, { desc = "[S]earch [/] in Open Files" })
+	vim.keymap.set(
 		"n",
 		"<leader>ds",
 		'<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
 		{ noremap = true, silent = true, desc = "[s]ymbols" }
 	)
-	vim.api.nvim_set_keymap(
+	vim.keymap.set(
 		"n",
 		"<leader>dr",
 		'<cmd>lua require("telescope.builtin").lsp_references()<CR>',
 		{ noremap = true, silent = true, desc = "[r]eferences" }
 	)
-	vim.api.nvim_set_keymap(
+	vim.keymap.set(
 		"n",
 		"<leader>df",
 		'<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
 		{ noremap = true, silent = true, desc = "de[f]inition" }
 	)
-	-- vim.api.nvim_set_keymap(
+	-- vim.keymap.set(
 	-- 	"n",
 	-- 	"<leader>su",
 	-- 	"<cmd>Telescope undo<CR>",
 	-- 	{ noremap = true, silent = true, desc = "[u]ndo" }
 	-- )
-	vim.api.nvim_set_keymap(
+	vim.keymap.set(
 		"n",
 		"<leader>se",
 		"<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
 		{ noremap = true, silent = true, desc = "file [e]xplorer" }
 	)
-	vim.api.nvim_set_keymap("n", "<leader>d", "", { noremap = true, silent = true, desc = "[d]ocument" })
-	vim.api.nvim_set_keymap("n", "<leader>s", "", { noremap = true, silent = true, desc = "[s]earch" })
-	vim.api.nvim_set_keymap(
+	vim.keymap.set("n", "<leader>d", "", { noremap = true, silent = true, desc = "[d]ocument" })
+	vim.keymap.set("n", "<leader>s", "", { noremap = true, silent = true, desc = "[s]earch" })
+	vim.keymap.set(
 		"n",
 		"<leader>ih",
 		"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",

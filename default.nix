@@ -37,6 +37,7 @@ in rec {
     vimPlugins.cmp-cmdline
     vimPlugins.cmp-path
     vimPlugins.cmp-buffer
+    vimPlugins.lspkind-nvim
 
     # Fuzzy finding
     vimPlugins.plenary-nvim
@@ -61,6 +62,12 @@ in rec {
     vimPlugins.nvim-tree-lua
     # Lualine
     vimPlugins.lualine-nvim
+    # Others
+    vimPlugins.vim-fugitive
+    vimPlugins.better-escape-nvim
+    vimPlugins.which-key-nvim
+    vimPlugins.lazygit-nvim
+    vimPlugins.gitsigns-nvim
     user-nvim
   ];
 
