@@ -1,58 +1,51 @@
 {
-  description = "This is my nvim flake, which gets installed via nix";
+  description = "Neovim configuration for TheAltF4Stream.";
+
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-  outputs = inputs @ {flake-parts, ...}:
-      flake-parts.lib.mkFlake {inherit inputs;} {
+
+  outputs = inputs @ {
+    self,
+    flake-parts,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      debug = true;
+
       flake = {
         lib = import ./lib {inherit inputs;};
-      }; 
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      };
+
+      systems = ["aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux"];
+
       perSystem = {
         config,
-        self',
-        inputs',
         pkgs,
         system,
         ...
       }: let
-        nvimPlugin = pkgs.vimUtils.buildVimPlugin {
-          name = "user-nvim";
-          postInstall = ''
-            rm -rf $out/README.md
-            rm -rf $out/flake.lock
-            rm -rf $out/flake.nix
-          '';
-          src = ./.;
-        };
-        customNeovim = pkgs.neovim.override {
-          configure = {
-            packages.myPlugins = with pkgs.vimPlugins; {
-              start = [ nvimPlugin ];
-            };
-          };
-          devShells = {
-            default = mkShell { buildInputs = [ just ]; };
-          };
-          formatter = alejandra;
-          packages = {
-            default = self.lib.mkVimPlugin { inherit system; };
-            neovim = self.lib.mkNeovim { inherit system; };
-          };
-        };
+        inherit (pkgs) alejandra just mkShell;
       in {
-        formatter = pkgs.alejandra;
-        packages = {
-          default = nvimPlugin;
-          neovim = customNeovim;
-        };
         apps = {
-          neovim = {
+          nvim = {
+            program = "${config.packages.neovim}/bin/nvim";
             type = "app";
-            program = "${customNeovim}/bin/nvim";
           };
+        };
+
+        devShells = {
+          default = mkShell {
+            buildInputs = [just];
+          };
+        };
+
+        formatter = alejandra;
+
+        packages = {
+          default = self.lib.mkVimPlugin {inherit system;};
+          neovim = self.lib.mkNeovim {inherit system;};
         };
       };
     };

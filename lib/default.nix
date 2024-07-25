@@ -22,7 +22,7 @@ rec {
         rm -rf $out/flake.nix
         rm -rf $out/justfile
       '';
-      src = ./.;
+      src = ../.;
     };
   mkNeovimPlugins =
     { system }:
@@ -74,6 +74,7 @@ rec {
       vimPlugins.which-key-nvim
       vimPlugins.lazygit-nvim
       vimPlugins.gitsigns-nvim
+
       user-nvim
     ];
 
@@ -120,9 +121,6 @@ rec {
         };
       };
       extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath extraPackages}"'';
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
     };
 
   # You can keep this if you want to use it with home-manager
@@ -137,8 +135,5 @@ rec {
       inherit extraConfig extraPackages plugins;
       defaultEditor = true;
       enable = true;
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
     };
 }

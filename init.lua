@@ -1,3 +1,2 @@
 -- init.lua
-print("init.lua")
-require("user-nvim")
+require("user").init()
