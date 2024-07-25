@@ -7,7 +7,7 @@ local function init()
 	require("user.options")
 	require("user.others").init()
 	require("user.telescope").init()
-	require("user.themes").init()
+	-- require("user.themes").init()
 	require("user.treesitter").init()
 end
 
