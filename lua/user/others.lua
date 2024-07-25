@@ -3,9 +3,6 @@ local M = {}
 local function init()
 	require("better_escape").setup()
 	require("lazygit")
-
-	-- ts.setup()
-	require("typescript-tools")
 	require("which-key").setup()
 	require("which-key").add({
 		{ "<leader>c", group = "[C]ode" },

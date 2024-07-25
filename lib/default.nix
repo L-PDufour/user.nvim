@@ -91,6 +91,8 @@ rec {
       pkgs.lua-language-server
       pkgs.nixfmt-rfc-style
       pkgs.vscode-langservers-extracted
+      pkgs.typescript-language-server
+      pkgs.nodePackages_latest.eslint
       pkgs.nodePackages_latest.prettier
       pkgs.prettierd
       pkgs.ripgrep

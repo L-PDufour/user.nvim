@@ -1,4 +1,5 @@
 local M = {}
+
 local function init()
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -18,36 +19,6 @@ local function init()
 			map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 			map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 			map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-
-			-- Highlight references of the word under cursor
-			local client = vim.lsp.get_client_by_id(event.data.client_id)
-			if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-				local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-					buffer = event.buf,
-					group = highlight_augroup,
-					callback = vim.lsp.buf.document_highlight,
-				})
-				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-					buffer = event.buf,
-					group = highlight_augroup,
-					callback = vim.lsp.buf.clear_references,
-				})
-				vim.api.nvim_create_autocmd("LspDetach", {
-					group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-					callback = function(event2)
-						vim.lsp.buf.clear_references()
-						vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-					end,
-				})
-			end
-
-			-- Toggle inlay hints if supported
-			if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-				map("<leader>th", function()
-					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-				end, "[T]oggle Inlay [H]ints")
-			end
 		end,
 	})
 
@@ -67,9 +38,81 @@ local function init()
 				},
 			},
 		},
-		-- Add other LSP servers here
-		eslint = {},
+		tsserver = {
+			settings = {
+				typescript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+				javascript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+			},
+		},
+		eslint = {
+			cmd = { "vscode-eslint-language-server", "--stdio" },
+			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" },
+			on_attach = function(_, bufnr)
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = bufnr,
+					command = "EslintFixAll",
+				})
+			end,
+			capabilities = capabilities,
+			root_dir = require("lspconfig").util.find_git_ancestor,
+			single_file_support = true,
+			settings = {
+				codeAction = {
+					disableRuleComment = {
+						enable = true,
+						location = "separateLine",
+					},
+					showDocumentation = {
+						enable = true,
+					},
+				},
+				codeActionOnSave = {
+					enable = true, -- Changed to true for auto-fixing on save
+					mode = "all",
+				},
+				format = true,
+				nodePath = "",
+				onIgnoredFiles = "off",
+				problems = {
+					shortenToSingleLine = false,
+				},
+				quiet = false,
+				rulesCustomizations = {},
+				run = "onType",
+				useESLintClass = false,
+				validate = "on",
+				workingDirectory = {
+					mode = "auto",
+				},
+			},
+		},
 	}
+
+	-- Setup LSP servers without Mason
+	for server_name, config in pairs(servers) do
+		config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+		require("lspconfig")[server_name].setup(config)
+	end
 
 	-- Setup LSP servers without Mason
 	for server_name, config in pairs(servers) do
