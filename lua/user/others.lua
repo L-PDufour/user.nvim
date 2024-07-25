@@ -5,7 +5,7 @@ local function init()
 	require("lazygit")
 
 	-- ts.setup()
-	local ts = require("typescript-tools")
+	require("typescript-tools")
 	require("which-key").setup()
 	require("which-key").add({
 		{ "<leader>c", group = "[C]ode" },
