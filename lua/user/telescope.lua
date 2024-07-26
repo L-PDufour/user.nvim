@@ -11,6 +11,9 @@ local function init()
 				i = {
 					["<c-enter>"] = actions.to_fuzzy_refine,
 				},
+				n = {
+					["dd"] = actions.delete_buffer,
+				},
 			},
 			file_ignore_patterns = {
 				"node_modules",

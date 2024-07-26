@@ -19,51 +19,31 @@ local function init()
 			map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 			map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 			map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+			map("K", vim.lsp.buf.hover, "Hover Documentation")
+			map("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 		end,
 	})
 
 	-- Create client capabilities
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+	local border = {
+		{ "🭽", "FloatBorder" },
+		{ "▔", "FloatBorder" },
+		{ "🭾", "FloatBorder" },
+		{ "▕", "FloatBorder" },
+		{ "🭿", "FloatBorder" },
+		{ "▁", "FloatBorder" },
+		{ "🭼", "FloatBorder" },
+		{ "▏", "FloatBorder" },
+	}
 
+	local handlers = {
+		["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+		["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+	}
 	-- Enable the following language servers
 	local servers = {
-		lua_ls = {
-			settings = {
-				Lua = {
-					completion = {
-						callSnippet = "Replace",
-					},
-					diagnostics = { disable = { "missing-fields" } },
-				},
-			},
-		},
-		tsserver = {
-			settings = {
-				typescript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-				javascript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-			},
-		},
 		eslint = {
 			cmd = { "vscode-eslint-language-server", "--stdio" },
 			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" },
@@ -106,19 +86,63 @@ local function init()
 				},
 			},
 		},
+		lua_ls = {
+			settings = {
+				Lua = {
+					completion = {
+						callSnippet = "Replace",
+					},
+					diagnostics = { disable = { "missing-fields" } },
+				},
+			},
+		},
+		nil_ls = {
+			settings = {
+				["nil"] = {},
+			},
+		},
+		tsserver = {
+			settings = {
+				typescript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+				javascript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+			},
+		},
 	}
 
-	-- Setup LSP servers without Mason
 	for server_name, config in pairs(servers) do
+		-- Merge capabilities and other configurations
 		config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+		-- Include handlers in the config object
+		config.handlers = handlers
+		-- Setup the LSP server
 		require("lspconfig")[server_name].setup(config)
-	end
+	end -- Setup LSP servers without Mason
+	-- for server_name, config in pairs(servers) do
+	-- 	config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+	-- 	require("lspconfig")[server_name].setup(config)({ handlers = handlers })
+	-- end
 
 	-- Setup LSP servers without Mason
-	for server_name, config in pairs(servers) do
-		config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
-		require("lspconfig")[server_name].setup(config)
-	end
 end
 M.init = init
 

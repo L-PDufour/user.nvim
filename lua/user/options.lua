@@ -45,8 +45,8 @@ vim.o.spell = false -- Highlight spelling mistakes (local to window)
 vim.o.wrap = false -- Prevent text from wrapping
 
 -- Tab options
-vim.o.tabstop = 4 -- Number of spaces a <Tab> in the text stands for (local to buffer)
-vim.o.shiftwidth = 4 -- Number of spaces used for each step of (auto)indent (local to buffer)
+-- vim.o.tabstop = 4 -- Number of spaces a <Tab> in the text stands for (local to buffer)
+-- vim.o.shiftwidth = 4 -- Number of spaces used for each step of (auto)indent (local to buffer)
 vim.o.expandtab = true -- Expand <Tab> to spaces in Insert mode (local to buffer)
 
 -- Text width
@@ -59,12 +59,12 @@ vim.o.foldlevel = 99 -- Folds with a level higher than this number will be close
 vim.o.showmode = false
 vim.o.breakindent = true
 vim.o.timeoutlen = 300
-vim.o.list = true
+vim.o.list = false
 vim.o.hlsearch = true -- Highlight search results
 
 -- Primestuff
 vim.opt.softtabstop = 4
-vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 local normal_mode_mappings = {
 	-- Clear search results with Esc

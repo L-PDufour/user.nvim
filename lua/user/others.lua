@@ -3,7 +3,9 @@ local M = {}
 local function init()
 	require("better_escape").setup()
 	require("lazygit")
-	require("which-key").setup()
+	require("which-key").setup({
+		win = { border = "single" },
+	})
 	require("which-key").add({
 		{ "<leader>c", group = "[C]ode" },
 		{ "<leader>d", group = "[D]ocument" },
@@ -13,29 +15,12 @@ local function init()
 		{ "<leader>t", group = "[T]oggle" },
 		{ "<leader>g", group = "[G]it hunk", mode = { "n", "v" } },
 	})
-	require("gitsigns").setup({
-		signs = {
-			add = { text = "+" },
-			change = { text = "~" },
-			delete = { text = "_" },
-			topdelete = { text = "‾" },
-			changedelete = { text = "~" },
-		},
-	})
+	require("gitsigns").setup({})
 	require("mini.ai").setup({ n_lines = 500 })
-
+	require("mini.starter").setup()
 	require("mini.surround").setup()
-	local statusline = require("mini.statusline")
-	-- set use_icons to true if you have a Nerd Font
-	statusline.setup({ use_icons = vim.g.have_nerd_font })
-
-	-- You can configure sections in the statusline by overriding their
-	-- default behavior. For example, here we set the section for
-	-- cursor location to LINE:COLUMN
-	---@diagnostic disable-next-line: duplicate-set-field
-	statusline.section_location = function()
-		return "%2l:%-2v"
-	end
+	vim.keymap.set({ "n", "x" }, "s", "<Nop>")
+	require("mini.statusline").setup()
 end
 M.init = init
 return M

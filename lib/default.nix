@@ -89,14 +89,15 @@ rec {
     [
       pkgs.gopls
       pkgs.lua-language-server
+      pkgs.nil
       pkgs.nixfmt-rfc-style
-      pkgs.vscode-langservers-extracted
-      pkgs.typescript-language-server
       pkgs.nodePackages_latest.eslint
       pkgs.nodePackages_latest.prettier
       pkgs.prettierd
       pkgs.ripgrep
       pkgs.stylua
+      pkgs.typescript-language-server
+      pkgs.vscode-langservers-extracted
     ];
 
   mkExtraConfig = ''
