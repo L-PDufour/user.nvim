@@ -1,7 +1,5 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
--- vim.cmd([[colorscheme tokyonight]])
--- vim.cmd([[colorscheme catppuccin]])
 
 -- General settings
 vim.o.updatetime = 100 -- Faster completion
@@ -44,27 +42,26 @@ vim.o.termguicolors = true -- Enables 24-bit RGB color in the TUI
 vim.o.spell = false -- Highlight spelling mistakes (local to window)
 vim.o.wrap = false -- Prevent text from wrapping
 
--- Tab options
--- vim.o.tabstop = 4 -- Number of spaces a <Tab> in the text stands for (local to buffer)
--- vim.o.shiftwidth = 4 -- Number of spaces used for each step of (auto)indent (local to buffer)
-vim.o.expandtab = true -- Expand <Tab> to spaces in Insert mode (local to buffer)
-
 -- Text width
 vim.o.textwidth = 0 -- Maximum width of text that is being inserted. A longer line will be broken after white space to get this width.
 
 -- Folding
 vim.o.foldlevel = 99 -- Folds with a level higher than this number will be closed
 
+-- Tab test
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+
 -- Other settings
 vim.o.showmode = false
-vim.o.breakindent = true
 vim.o.timeoutlen = 300
 vim.o.list = false
 vim.o.hlsearch = true -- Highlight search results
 
 -- Primestuff
-vim.opt.softtabstop = 4
-vim.opt.autoindent = true
 
 local normal_mode_mappings = {
 	-- Clear search results with Esc
@@ -106,14 +103,8 @@ local normal_mode_mappings = {
 	["<C-u>"] = { "<C-u>zz", { desc = "Scroll up and center cursor" } },
 	["n"] = { "nzzzv", { desc = "Next search result and center view" } },
 	["N"] = { "Nzzzv", { desc = "Previous search result and center view" } },
-	["<leader>y"] = { [["+y]], { desc = "Yank to system clipboard" } },
 	["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
-	["<leader>d"] = { [["_d]], { desc = "Delete without yanking" } },
-	["<C-k>"] = { "<cmd>cnext<CR>zz", { desc = "Next quickfix item and center" } },
-	["<C-j>"] = { "<cmd>cprev<CR>zz", { desc = "Previous quickfix item and center" } },
-	["<leader>k"] = { "<cmd>lnext<CR>zz", { desc = "Next location list item and center" } },
-	["<leader>j"] = { "<cmd>lprev<CR>zz", { desc = "Previous location list item and center" } },
-	["<leader>s"] = {
+	["<leader>S"] = {
 		[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
 		{ desc = "Search and replace word under cursor" },
 	},
@@ -132,6 +123,7 @@ local visual_mode_mappings = {
 	["K"] = { ":m '<-2<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines up
 	["J"] = { ":m '>+1<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines down
 	["<leader>y"] = { [["+y]], { desc = "Yank selection to system clipboard" } },
+	["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
 	["<leader>d"] = { [["_d]], { desc = "Delete selection without yanking" } },
 }
 local shared_mappings = {
@@ -151,3 +143,5 @@ end
 for key, value in pairs(shared_mappings) do
 	vim.keymap.set({ "n", "v" }, key, value[1], value[2])
 end
+-- mini.surround
+vim.keymap.set({ "n", "x" }, "s", "<Nop>")

@@ -55,18 +55,12 @@ rec {
       vimPlugins.telescope-fzf-native-nvim
       # Theme
       vimPlugins.catppuccin-nvim
-
       # Git integration
       vimPlugins.gitsigns-nvim
 
       # Treesitter for better syntax highlighting
       vimPlugins.nvim-treesitter.withAllGrammars
 
-      # Icons
-      vimPlugins.nvim-web-devicons
-
-      # File explorer
-      # Lualine
       # Others
       vimPlugins.mini-nvim
       vimPlugins.vim-fugitive
