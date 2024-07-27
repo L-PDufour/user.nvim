@@ -61,6 +61,17 @@ vim.o.timeoutlen = 300
 vim.o.list = false
 vim.o.hlsearch = true -- Highlight search results
 
+vim.g.clipboard = {
+	name = "OSC 52",
+	copy = {
+		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+	},
+	paste = {
+		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+	},
+}
 -- Primestuff
 
 local normal_mode_mappings = {
