@@ -44,48 +44,48 @@ local function init()
 	}
 	-- Enable the following language servers
 	local servers = {
-		-- eslint = {
-		-- 	cmd = { "vscode-eslint-language-server", "--stdio" },
-		-- 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" },
-		-- 	on_attach = function(_, bufnr)
-		-- 		vim.api.nvim_create_autocmd("BufWritePre", {
-		-- 			buffer = bufnr,
-		-- 			command = "EslintFixAll",
-		-- 		})
-		-- 	end,
-		-- 	capabilities = capabilities,
-		-- 	root_dir = require("lspconfig").util.find_git_ancestor,
-		-- 	single_file_support = true,
-		-- 	settings = {
-		-- 		codeAction = {
-		-- 			disableRuleComment = {
-		-- 				enable = true,
-		-- 				location = "separateLine",
-		-- 			},
-		-- 			showDocumentation = {
-		-- 				enable = true,
-		-- 			},
-		-- 		},
-		-- 		codeActionOnSave = {
-		-- 			enable = true, -- Changed to true for auto-fixing on save
-		-- 			mode = "all",
-		-- 		},
-		-- 		format = true,
-		-- 		nodePath = "",
-		-- 		onIgnoredFiles = "off",
-		-- 		problems = {
-		-- 			shortenToSingleLine = false,
-		-- 		},
-		-- 		quiet = false,
-		-- 		rulesCustomizations = {},
-		-- 		run = "onType",
-		-- 		useESLintClass = false,
-		-- 		validate = "on",
-		-- 		workingDirectory = {
-		-- 			mode = "auto",
-		-- 		},
-		-- 	},
-		-- },
+		eslint = {
+			-- cmd = { "vscode-eslint-language-server", "--stdio" },
+			-- filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" },
+			-- on_attach = function(_, bufnr)
+			-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+			-- 		buffer = bufnr,
+			-- 		command = "EslintFixAll",
+			-- 	})
+			-- end,
+			-- capabilities = capabilities,
+			-- root_dir = require("lspconfig").util.find_git_ancestor,
+			-- single_file_support = true,
+			-- settings = {
+			-- 	codeAction = {
+			-- 		disableRuleComment = {
+			-- 			enable = true,
+			-- 			location = "separateLine",
+			-- 		},
+			-- 		showDocumentation = {
+			-- 			enable = true,
+			-- 		},
+			-- 	},
+			-- 	codeActionOnSave = {
+			-- 		enable = true, -- Changed to true for auto-fixing on save
+			-- 		mode = "all",
+			-- 	},
+			-- 	format = true,
+			-- 	nodePath = "",
+			-- 	onIgnoredFiles = "off",
+			-- 	problems = {
+			-- 		shortenToSingleLine = false,
+			-- 	},
+			-- 	quiet = false,
+			-- 	rulesCustomizations = {},
+			-- 	run = "onType",
+			-- 	useESLintClass = false,
+			-- 	validate = "on",
+			-- 	workingDirectory = {
+			-- 		mode = "auto",
+			-- 	},
+			-- },
+		},
 		lua_ls = {
 			settings = {
 				Lua = {
@@ -101,32 +101,32 @@ local function init()
 				["nil"] = {},
 			},
 		},
-		tsserver = {
-			settings = {
-				typescript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-				javascript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-			},
-		},
+		-- tsserver = {
+		-- 	settings = {
+		-- 		typescript = {
+		-- 			inlayHints = {
+		-- 				includeInlayParameterNameHints = "all",
+		-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+		-- 				includeInlayFunctionParameterTypeHints = true,
+		-- 				includeInlayVariableTypeHints = true,
+		-- 				includeInlayPropertyDeclarationTypeHints = true,
+		-- 				includeInlayFunctionLikeReturnTypeHints = true,
+		-- 				includeInlayEnumMemberValueHints = true,
+		-- 			},
+		-- 		},
+		-- 		javascript = {
+		-- 			inlayHints = {
+		-- 				includeInlayParameterNameHints = "all",
+		-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+		-- 				includeInlayFunctionParameterTypeHints = true,
+		-- 				includeInlayVariableTypeHints = true,
+		-- 				includeInlayPropertyDeclarationTypeHints = true,
+		-- 				includeInlayFunctionLikeReturnTypeHints = true,
+		-- 				includeInlayEnumMemberValueHints = true,
+		-- 			},
+		-- 		},
+		-- 	},
+		-- },
 	}
 
 	for server_name, config in pairs(servers) do
@@ -143,6 +143,7 @@ local function init()
 	-- end
 
 	-- Setup LSP servers without Mason
+	require("typescript-tools").setup({})
 end
 M.init = init
 

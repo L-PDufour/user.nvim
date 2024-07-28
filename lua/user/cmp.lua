@@ -1,10 +1,9 @@
 local M = {}
-local cmp = require("cmp")
-local luasnip = require("luasnip")
 
 local function init()
+	local cmp = require("cmp")
+	local luasnip = require("luasnip")
 	luasnip.config.setup({})
-	vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 	cmp.setup({
 		snippet = {
@@ -18,7 +17,6 @@ local function init()
 		-- chosen, you will need to read `:help ins-completion`
 		--
 		-- No, but seriously. Please read `:help ins-completion`, it is really good!
-		window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
 		mapping = cmp.mapping.preset.insert({
 			-- Select the [n]ext item
 			["<C-n>"] = cmp.mapping.select_next_item(),
@@ -71,30 +69,7 @@ local function init()
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
 			{ name = "path" },
-			{ name = "buffer" },
-			{ name = "cmdline" },
 		},
-	})
-	-- `/` cmdline setup.
-	cmp.setup.cmdline("/", {
-		mapping = cmp.mapping.preset.cmdline(),
-		sources = {
-			{ name = "buffer" },
-		},
-	})
-	-- `:` cmdline setup.
-	cmp.setup.cmdline(":", {
-		mapping = cmp.mapping.preset.cmdline(),
-		sources = cmp.config.sources({
-			{ name = "path" },
-		}, {
-			{
-				name = "cmdline",
-				option = {
-					ignore_cmds = { "Man", "!" },
-				},
-			},
-		}),
 	})
 end
 

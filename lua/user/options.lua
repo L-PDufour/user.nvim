@@ -60,6 +60,8 @@ vim.o.showmode = false
 vim.o.timeoutlen = 300
 vim.o.list = false
 vim.o.hlsearch = true -- Highlight search results
+vim.opt.inccommand = "split"
+vim.opt.cursorline = true
 
 vim.g.clipboard = {
 	name = "OSC 52",
