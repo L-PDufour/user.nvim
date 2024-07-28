@@ -1,6 +1,29 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+require("catppuccin").setup({
+	integrations = {
+		cmp = true,
+		gitsigns = true,
+		nvimtree = true,
+		treesitter = true,
+		notify = true,
+		which_key = true,
+		mini = {
+			enabled = true,
+			indentscope_color = "",
+		},
+	},
+})
+vim.cmd.colorscheme("catppuccin-frappe")
+-- require("lualine").setup({
+-- 	options = {
+-- 		theme = "catppuccin-frappe",
+-- 		icons_enabled = false,
+-- 		component_separators = "|",
+-- 		section_separators = "",
+-- 	},
+-- })
 -- General settings
 vim.o.updatetime = 100 -- Faster completion
 
@@ -36,7 +59,7 @@ vim.o.scrolloff = 8 -- Number of screen lines to show around the cursor
 vim.o.cursorline = true -- Highlight the screen line of the cursor
 vim.o.cursorcolumn = false -- Highlight the screen column of the cursor
 vim.o.signcolumn = "yes" -- Whether to show the signcolumn
-vim.o.laststatus = 0 -- When to use a status line for the last window
+vim.o.laststatus = 2 -- When to use a status line for the last window
 vim.o.fileencoding = "utf-8" -- File-content encoding for the current buffer
 vim.o.termguicolors = true -- Enables 24-bit RGB color in the TUI
 vim.o.spell = false -- Highlight spelling mistakes (local to window)
@@ -74,7 +97,14 @@ vim.g.clipboard = {
 		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
 	},
 }
--- Primestuff
+vim.diagnostic.config({
+	update_in_insert = true,
+})
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<leader>Q", vim.diagnostic.setqflist)
 
 local normal_mode_mappings = {
 	-- Clear search results with Esc

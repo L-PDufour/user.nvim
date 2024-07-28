@@ -1,9 +1,12 @@
 local M = {}
 
 local function init()
+	require("mini.statusline").setup()
 	require("mini.ai").setup()
+	-- NOTE Changer bracketed
 	require("mini.bracketed").setup()
 	require("mini.diff").setup()
+	require("mini.git").setup()
 	local hipatterns = require("mini.hipatterns")
 	hipatterns.setup({
 		highlighters = {
@@ -25,7 +28,13 @@ local function init()
 		items = { starter.sections.recent_files(10, true) },
 	})
 	require("mini.surround").setup()
-	require("mini.statusline").setup()
+	require("mini.comment").setup({})
+	require("mini.notify").setup({
+		lsp_progress = { enable = false },
+	})
+
+	-- See :help MiniNotify.make_notify()
+	vim.notify = require("mini.notify").make_notify({})
 end
 M.init = init
 return M

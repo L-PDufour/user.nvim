@@ -1,7 +1,4 @@
-local function init()
-	require("catppuccin").setup()
-	vim.cmd.colorscheme("catppuccin-frappe")
-end
+local function init() end
 return {
 	init = init,
 }

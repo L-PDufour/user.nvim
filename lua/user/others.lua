@@ -4,6 +4,7 @@ local function init()
 	require("better_escape").setup()
 	require("lazygit")
 	require("which-key").setup({
+		icons = { mappings = false },
 		win = { border = "single" },
 	})
 	require("which-key").add({

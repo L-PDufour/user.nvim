@@ -52,7 +52,8 @@ rec {
       vimPlugins.telescope-nvim
       vimPlugins.telescope-ui-select-nvim
       vimPlugins.telescope-file-browser-nvim
-      vimPlugins.telescope-fzf-native-nvim
+      # vimPlugins.telescope-fzf-native-nvim
+      vimPlugins.telescope-zf-native-nvim
       # Theme
       vimPlugins.catppuccin-nvim
       # Git integration
@@ -62,6 +63,7 @@ rec {
       vimPlugins.nvim-treesitter.withAllGrammars
 
       # Others
+      vimPlugins.lualine-nvim
       vimPlugins.mini-nvim
       vimPlugins.vim-fugitive
       vimPlugins.better-escape-nvim
