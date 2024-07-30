@@ -20,7 +20,6 @@ function M.init()
 
 	local function setup_lsp_servers(capabilities)
 		local servers = {
-			eslint = {},
 			lua_ls = {
 				settings = {
 					Lua = {

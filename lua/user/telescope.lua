@@ -50,7 +50,9 @@ local function init()
 	telescope.load_extension("file_browser")
 	telescope.load_extension("ui-select")
 	telescope.load_extension("zf-native")
-
+	telescope.load_extension("rest")
+	-- then use it, you can also use the `:Telescope rest select_env` command
+	-- telescope.extensions.rest.select_env()
 	-- telescope.load_extension("fzf")
 	telescope.load_extension("lazygit")
 	-- telescope.load_extension("undo")

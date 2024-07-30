@@ -5,6 +5,9 @@ local function init()
 	require("lazygit")
 	require("which-key").setup({
 		icons = { mappings = false },
+		win = {
+			border = "single",
+		},
 	})
 	require("which-key").add({
 		{ "<leader>c", group = "[C]ode" },
@@ -16,6 +19,20 @@ local function init()
 		{ "<leader>g", group = "[G]it hunk", mode = { "n", "v" } },
 	})
 	require("gitsigns").setup({})
+	require("rest-nvim").setup({
+		keybinds = {
+			{
+				"<localleader>rr",
+				"<cmd>Rest run<cr>",
+				"Run request under the cursor",
+			},
+			{
+				"<localleader>rl",
+				"<cmd>Rest run last<cr>",
+				"Re-run latest request",
+			},
+		},
+	})
 end
 M.init = init
 return M

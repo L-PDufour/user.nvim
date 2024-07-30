@@ -71,6 +71,7 @@ rec {
       vimPlugins.which-key-nvim
       vimPlugins.lazygit-nvim
       vimPlugins.gitsigns-nvim
+      vimPlugins.rest-nvim
 
       user-nvim
     ];
