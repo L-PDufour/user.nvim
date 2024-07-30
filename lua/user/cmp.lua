@@ -6,6 +6,9 @@ local function init()
 	luasnip.config.setup({})
 
 	cmp.setup({
+		view = {
+			entries = { name = "custom", selection_order = "near_cursor" },
+		},
 		snippet = {
 			expand = function(args)
 				luasnip.lsp_expand(args.body)
@@ -41,6 +44,26 @@ local function init()
 			{ name = "luasnip" },
 			{ name = "path" },
 		},
+	})
+	cmp.setup.cmdline("/", {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = {
+			{ name = "buffer" },
+		},
+	})
+	-- `:` cmdline setup.
+	cmp.setup.cmdline(":", {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = cmp.config.sources({
+			{ name = "path" },
+		}, {
+			{
+				name = "cmdline",
+				option = {
+					ignore_cmds = { "Man", "!" },
+				},
+			},
+		}),
 	})
 end
 

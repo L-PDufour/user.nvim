@@ -40,7 +40,7 @@ local function init()
 				enable = true,
 				themes.get_dropdown(),
 			},
-			["fzf-native"] = {
+			["zf-native"] = {
 				enable = true,
 			},
 		},

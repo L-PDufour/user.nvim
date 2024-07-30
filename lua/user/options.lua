@@ -1,7 +1,43 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
+require("transparent").setup({ -- Optional, you don't have to run setup.
+	groups = { -- table: default groups
+		"Normal",
+		"NormalNC",
+		"Comment",
+		"Constant",
+		"Special",
+		"Identifier",
+		"Statement",
+		"PreProc",
+		"Type",
+		"Underlined",
+		"Todo",
+		"String",
+		"Function",
+		"Conditional",
+		"Repeat",
+		"Operator",
+		"Structure",
+		"LineNr",
+		"NonText",
+		"SignColumn",
+		"CursorLine",
+		"CursorLineNr",
+		"StatusLine",
+		"StatusLineNC",
+		"EndOfBuffer",
+	},
+	extra_groups = {}, -- table: additional groups that should be cleared
+	exclude_groups = {}, -- table: groups you don't want to clear
+})
 require("catppuccin").setup({
+	flavour = "frappe",
+	background = {
+		light = "frappe",
+		dark = "frappe",
+	},
+	transparent_background = true,
 	integrations = {
 		cmp = true,
 		gitsigns = true,
@@ -15,7 +51,7 @@ require("catppuccin").setup({
 		},
 	},
 })
-vim.cmd.colorscheme("catppuccin-frappe")
+vim.cmd.colorscheme("catppuccin")
 -- require("lualine").setup({
 -- 	options = {
 -- 		theme = "catppuccin-frappe",
@@ -59,7 +95,7 @@ vim.o.scrolloff = 8 -- Number of screen lines to show around the cursor
 vim.o.cursorline = true -- Highlight the screen line of the cursor
 vim.o.cursorcolumn = false -- Highlight the screen column of the cursor
 vim.o.signcolumn = "yes" -- Whether to show the signcolumn
-vim.o.laststatus = 2 -- When to use a status line for the last window
+vim.o.laststatus = 3 -- When to use a status line for the last window
 vim.o.fileencoding = "utf-8" -- File-content encoding for the current buffer
 vim.o.termguicolors = true -- Enables 24-bit RGB color in the TUI
 vim.o.spell = false -- Highlight spelling mistakes (local to window)
@@ -97,9 +133,7 @@ vim.g.clipboard = {
 		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
 	},
 }
-vim.diagnostic.config({
-	update_in_insert = true,
-})
+
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)

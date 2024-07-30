@@ -56,6 +56,7 @@ rec {
       vimPlugins.telescope-zf-native-nvim
       # Theme
       vimPlugins.catppuccin-nvim
+      vimPlugins.transparent-nvim
       # Git integration
       vimPlugins.gitsigns-nvim
 
@@ -87,7 +88,6 @@ rec {
       pkgs.lua-language-server
       pkgs.nil
       pkgs.nixfmt-rfc-style
-      pkgs.nodePackages_latest.eslint
       pkgs.nodePackages_latest.prettier
       pkgs.prettierd
       pkgs.ripgrep

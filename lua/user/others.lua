@@ -5,7 +5,6 @@ local function init()
 	require("lazygit")
 	require("which-key").setup({
 		icons = { mappings = false },
-		win = { border = "single" },
 	})
 	require("which-key").add({
 		{ "<leader>c", group = "[C]ode" },
