@@ -86,6 +86,7 @@ rec {
     in
     [
       pkgs.gopls
+      pkgs.htmx-lsp
       pkgs.lua-language-server
       pkgs.nil
       pkgs.nixfmt-rfc-style
@@ -93,8 +94,10 @@ rec {
       pkgs.prettierd
       pkgs.ripgrep
       pkgs.stylua
+      pkgs.tailwindcss-language-server
       pkgs.typescript-language-server
       pkgs.vscode-langservers-extracted
+      pkgs.templ
     ];
 
   mkExtraConfig = ''

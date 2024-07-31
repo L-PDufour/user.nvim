@@ -4,7 +4,6 @@ function M.init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 	vim.o.termguicolors = true -- Enables 24-bit RGB color in the TUI
-	require("transparent").setup()
 	local border = {
 		{ "🭽", "FloatBorder" },
 		{ "▔", "FloatBorder" },
@@ -21,7 +20,6 @@ function M.init()
 			light = "frappe",
 			dark = "frappe",
 		},
-		transparent_background = true,
 		integrations = {
 			cmp = true,
 			gitsigns = true,

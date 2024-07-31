@@ -20,6 +20,13 @@ function M.init()
 
 	local function setup_lsp_servers(capabilities)
 		local servers = {
+			gopls = {},
+			html = {
+				filetypes = { "html", "templ" },
+			},
+			htmx = {
+				filetypes = { "html", "templ" },
+			},
 			lua_ls = {
 				settings = {
 					Lua = {
@@ -29,6 +36,11 @@ function M.init()
 				},
 			},
 			nil_ls = { settings = { ["nil"] = {} } },
+			tailwindcss = {
+				filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+				init_options = { userLanguages = { templ = "html" } },
+			},
+			templ = {},
 		}
 		for server_name, config in pairs(servers) do
 			config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
