@@ -26,6 +26,9 @@ local function init()
 			layout_strategy = "horizontal",
 			layout_config = {
 				prompt_position = "top",
+				width = { padding = 0 },
+				height = { padding = 0 },
+				preview_width = 0.4,
 			},
 			sorting_strategy = "ascending",
 		},
@@ -51,6 +54,7 @@ local function init()
 	telescope.load_extension("ui-select")
 	telescope.load_extension("zf-native")
 	telescope.load_extension("rest")
+	telescope.load_extension("noice")
 	-- then use it, you can also use the `:Telescope rest select_env` command
 	-- telescope.extensions.rest.select_env()
 	-- telescope.load_extension("fzf")
@@ -115,6 +119,7 @@ local function init()
 		"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
 		{ noremap = true, silent = true, desc = "[i]nlay [h]int" }
 	)
+	-- Move cursor in command-line mode
 end
 
 M.init = init

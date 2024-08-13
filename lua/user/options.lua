@@ -4,16 +4,16 @@ function M.init()
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 	vim.o.termguicolors = true -- Enables 24-bit RGB color in the TUI
-	local border = {
-		{ "🭽", "FloatBorder" },
-		{ "▔", "FloatBorder" },
-		{ "🭾", "FloatBorder" },
-		{ "▕", "FloatBorder" },
-		{ "🭿", "FloatBorder" },
-		{ "▁", "FloatBorder" },
-		{ "🭼", "FloatBorder" },
-		{ "▏", "FloatBorder" },
-	}
+	-- local border = {
+	-- 	{ "🭽", "FloatBorder" },
+	-- 	{ "▔", "FloatBorder" },
+	-- 	{ "🭾", "FloatBorder" },
+	-- 	{ "▕", "FloatBorder" },
+	-- 	{ "🭿", "FloatBorder" },
+	-- 	{ "▁", "FloatBorder" },
+	-- 	{ "🭼", "FloatBorder" },
+	-- 	{ "▏", "FloatBorder" },
+	-- }
 	require("catppuccin").setup({
 		flavour = "frappe",
 		background = {
@@ -27,6 +27,7 @@ function M.init()
 			treesitter = true,
 			notify = true,
 			which_key = true,
+			noice = true,
 			mini = {
 				enabled = true,
 				indentscope_color = "",
@@ -35,34 +36,6 @@ function M.init()
 	})
 
 	vim.cmd.colorscheme("catppuccin")
-
-	-- Add these lines after the colorscheme is set
-	-- vim.api.nvim_set_hl(0, "TabLineSel", { bg = "#FF69B4" }) -- Pink background
-	-- vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#0000FF" }) -- Blue foreground
-	-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#0000FF", bg = "#FFFFFF" }) -- Blue foreground, white background
-	-- vim.api.nvim_set_hl(0, "Pmenu", { bg = "NONE" })
-	-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-	-- vim.api.nvim_set_hl(0, "WhichKeyBorder", { fg = "#0000FF", bg = "#FFFFFF" }) -- Blue foreground, white background
-	-- vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = "#FFFFFF" }) -- White background
-	-- vim.api.nvim_set_hl(0, "WhichKey", { fg = "#0000FF" }) -- Blue foreground
-	-- vim.api.nvim_set_hl(0, "WhichKeyDesc", { fg = "#FF69B4" }) -- Pink foreground
-	-- vim.api.nvim_set_hl(0, "WhichKeyGroup", { fg = "#00FF00" }) -- Green foreground
-	-- vim.api.nvim_set_hl(0, "WhichKeySeparator", { fg = "#808080" }) -- Gray foreground
-	-- vim.api.nvim_set_hl(0, "WhichKeyValue", { fg = "#E6E6FA" }) -- Lavender foreground
-
-	local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-		opts = opts or {}
-		opts.border = opts.border or border
-		return orig_util_open_floating_preview(contents, syntax, opts, ...)
-	end
-	--
-	vim.diagnostic.config({
-		float = {
-			border = border,
-			source = "always",
-		},
-	})
 	--
 	-- require("lualine").setup({
 	-- 	options = {
@@ -72,6 +45,7 @@ function M.init()
 	-- 		section_separators = "",
 	-- 	},
 	-- })
+
 	-- General settings
 	vim.o.updatetime = 100 -- Faster completion
 
@@ -197,6 +171,8 @@ function M.init()
 			{ desc = "Search and replace word under cursor" },
 		},
 		-- ["<leader>x"] = { "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" } },
+		["<leader>gc"] = { "<cmd>colorscheme catppuccin<cr>", { desc = "set colorscheme" } },
+		["<leader>ut"] = { "<cmd>UndotreeToggle<cr>", { desc = "Undo Tree" } },
 	}
 
 	-- Define key mappings for Visual mode
@@ -233,6 +209,17 @@ function M.init()
 	end
 	-- mini.surround
 	vim.keymap.set({ "n", "x" }, "s", "<Nop>")
+	-- Move cursor in command-line mode
+	-- Command line navigation
+	vim.keymap.set("c", "<C-a>", "<Home>", { noremap = true }) -- Go to beginning of line
+	vim.keymap.set("c", "<C-e>", "<End>", { noremap = true }) -- Go to end of line
+	vim.keymap.set("c", "<C-b>", "<Left>", { noremap = true }) -- Move one character backward
+	vim.keymap.set("c", "<C-f>", "<Right>", { noremap = true }) -- Move one character forward
+	vim.keymap.set("c", "<C-d>", "<Del>", { noremap = true }) -- Delete character under cursor
+	vim.keymap.set("c", "<C-h>", "<BS>", { noremap = true }) -- Delete character before cursor
+	vim.keymap.set("c", "<C-w>", "<C-w>", { noremap = true }) -- Delete word before cursor
+	vim.keymap.set("c", "<C-u>", "<C-u>", { noremap = true }) -- Delete to beginning of line
+	vim.keymap.set("c", "<C-k>", '<C-\\>e("\\<C-E>\\<C-U>")<CR>', { noremap = true }) -- Delete to end of line
 end
 
 return M

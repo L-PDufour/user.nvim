@@ -23,6 +23,12 @@ function M.init()
 			gopls = {},
 			html = {
 				filetypes = { "html", "templ" },
+				on_attach = function(client)
+					if vim.b.format_disabled then
+						client.server_capabilities.documentFormattingProvider = false
+						client.server_capabilities.documentRangeFormattingProvider = false
+					end
+				end,
 			},
 			htmx = {
 				filetypes = { "html", "templ" },
@@ -37,17 +43,31 @@ function M.init()
 			},
 			nil_ls = { settings = { ["nil"] = {} } },
 			tailwindcss = {
-				filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+				filetypes = { "html", "templ", "astro", "javascript", "typescript", "react" },
 				init_options = { userLanguages = { templ = "html" } },
 			},
 			templ = {},
 		}
 		for server_name, config in pairs(servers) do
 			config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
-			require("lspconfig")[server_name].setup(config)
+
+			local ok, lspconfig = pcall(require, "lspconfig")
+			if not ok then
+				print("Failed to require lspconfig")
+				return
+			end
+
+			local server = lspconfig[server_name]
+			if server then
+				local setup_ok, setup_error = pcall(server.setup, config)
+				if not setup_ok then
+					print("Failed to setup " .. server_name .. ": " .. setup_error)
+				end
+			else
+				print("LSP server " .. server_name .. " not found")
+			end
 		end
 	end
-
 	-- Create client capabilities
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
