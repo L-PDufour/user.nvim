@@ -20,15 +20,11 @@ function M.init()
 
 	local function setup_lsp_servers(capabilities)
 		local servers = {
-			gopls = {},
+			gopls = {
+				filetypes = { "templ", "go" },
+			},
 			html = {
 				filetypes = { "html", "templ" },
-				on_attach = function(client)
-					if vim.b.format_disabled then
-						client.server_capabilities.documentFormattingProvider = false
-						client.server_capabilities.documentRangeFormattingProvider = false
-					end
-				end,
 			},
 			htmx = {
 				filetypes = { "html", "templ" },
@@ -44,7 +40,6 @@ function M.init()
 			nil_ls = { settings = { ["nil"] = {} } },
 			tailwindcss = {
 				filetypes = { "html", "templ", "astro", "javascript", "typescript", "react" },
-				init_options = { userLanguages = { templ = "html" } },
 			},
 			templ = {},
 		}
