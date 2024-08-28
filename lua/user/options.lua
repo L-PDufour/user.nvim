@@ -34,7 +34,6 @@ function M.init()
 			},
 		},
 	})
-
 	vim.cmd.colorscheme("catppuccin")
 	--
 	-- require("lualine").setup({

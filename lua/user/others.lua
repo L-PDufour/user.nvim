@@ -33,6 +33,28 @@ local function init()
 			},
 		},
 	})
+	-- Task
+	vim.g.calendar_google_calendar = 1
+	vim.g.calendar_google_task = 1
+
+	-- Source the Lua credentials file
+	dofile(vim.fn.expand("~/.cache/calendar.vim/credentials.lua"))
+
+	-- If you want to add more vim-calendar settings, you can do so like this:
+	-- vim.g.calendar_view = 'week'
+	-- vim.g.calendar_first_day = 'monday'
+
+	-- You might also want to set up some keybindings for vim-calendar
+	vim.api.nvim_set_keymap("n", "<Leader>cal", ":Calendar<CR>", { noremap = true, silent = true })
+
+	-- If you want to create any autocommands for vim-calendar, you can do it like this:
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "calendar",
+		callback = function()
+			-- Set up any calendar-specific settings here
+			vim.opt_local.wrap = false
+		end,
+	})
 end
 M.init = init
 return M

@@ -75,6 +75,9 @@ rec {
       vimPlugins.nui-nvim
       vimPlugins.noice-nvim
 
+      # Task
+      vimPlugins.calendar-vim
+
       user-nvim
     ];
 
@@ -88,6 +91,7 @@ rec {
     in
     [
       pkgs.gopls
+      pkgs.python3
       pkgs.htmx-lsp
       pkgs.lua-language-server
       pkgs.nil
