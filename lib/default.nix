@@ -56,11 +56,13 @@ rec {
       vimPlugins.telescope-zf-native-nvim
       # Theme
       vimPlugins.catppuccin-nvim
+      vimPlugins.tokyonight-nvim
       # Git integration
       vimPlugins.gitsigns-nvim
 
       # Treesitter for better syntax highlighting
       vimPlugins.nvim-treesitter.withAllGrammars
+      vimPlugins.nvim-treesitter-context
 
       # Others
       vimPlugins.lualine-nvim

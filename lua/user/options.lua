@@ -14,26 +14,26 @@ function M.init()
 	-- 	{ "🭼", "FloatBorder" },
 	-- 	{ "▏", "FloatBorder" },
 	-- }
-	require("catppuccin").setup({
-		flavour = "frappe",
-		background = {
-			light = "frappe",
-			dark = "frappe",
-		},
-		integrations = {
-			cmp = true,
-			gitsigns = true,
-			nvimtree = true,
-			treesitter = true,
-			notify = true,
-			which_key = true,
-			noice = true,
-			mini = {
-				enabled = true,
-				indentscope_color = "",
-			},
-		},
-	})
+	-- require("catppuccin").setup({
+	-- 	flavour = "frappe",
+	-- 	background = {
+	-- 		light = "frappe",
+	-- 		dark = "frappe",
+	-- 	},
+	-- 	integrations = {
+	-- 		cmp = true,
+	-- 		gitsigns = true,
+	-- 		nvimtree = true,
+	-- 		treesitter = true,
+	-- 		notify = true,
+	-- 		which_key = true,
+	-- 		noice = true,
+	-- 		mini = {
+	-- 			enabled = true,
+	-- 			indentscope_color = "",
+	-- 		},
+	-- 	},
+	-- })
 	vim.cmd.colorscheme("catppuccin")
 	--
 	-- require("lualine").setup({
