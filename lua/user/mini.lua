@@ -5,6 +5,13 @@ local function init()
 	require("mini.ai").setup()
 	-- NOTE Changer bracketed
 	require("mini.bracketed").setup()
+	require("notify").setup({
+		stages = "fade_in_slide_out",
+		timeout = 3000,
+	})
+
+	-- Make nvim the default notification handler
+	vim.notify = require("notify")
 	require("mini.diff").setup()
 	require("mini.git").setup()
 	local hipatterns = require("mini.hipatterns")
@@ -29,13 +36,23 @@ local function init()
 	require("mini.surround").setup()
 	require("mini.comment").setup({})
 	require("noice").setup({
+		routes = {
+			{
+				filter = {
+					event = "msg_show",
+					find = "Telescope",
+				},
+				opts = { skip = true }, -- Do not show Telescope messages in Noice
+			},
+		},
 		lsp = {
-			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+			progress = { enabled = true },
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
 				["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 			},
+			signature = { enabled = true },
 		},
 		-- you can enable a preset for easier configuration
 		presets = {
@@ -46,7 +63,7 @@ local function init()
 			lsp_doc_border = true, -- add a border to hover docs and signature help
 		},
 		cmdline = {
-			view = "cmdline_popup", -- use a popup for the cmdline
+			view = "cmdline_popup",
 			opts = {
 				position = {
 					row = "50%", -- vertically center the popup
@@ -59,7 +76,7 @@ local function init()
 			},
 		},
 		popupmenu = {
-			backend = "popup", -- use the popup backend for the popupmenu
+			backend = "popup",
 			opts = {
 				position = {
 					row = "50%", -- vertically center the popupmenu
@@ -70,6 +87,20 @@ local function init()
 					height = 10, -- set a fixed height
 				},
 			},
+		},
+	})
+	require("dressing").setup({
+		input = {
+			winblend = 10, -- Transparency for input windows
+			border = "rounded", -- Rounded borders for input windows
+		},
+		select = {
+			-- Use telescope-ui-select when available
+			backend = { "telescope", "builtin" },
+			telescope = require("telescope.themes").get_dropdown({
+				winblend = 10, -- Transparency for the dropdown
+				previewer = false, -- No preview for dropdown select
+			}),
 		},
 	})
 end

@@ -25,41 +25,37 @@ local function init()
 			},
 			layout_strategy = "horizontal",
 			layout_config = {
+				horizontal = {
+					preview_width = 0.5, -- Correct usage under horizontal layout
+					width = 0.9, -- Adjust width as needed
+					height = 0.9, -- Adjust height as needed
+				},
+				vertical = {
+					preview_height = 0.5, -- Use for vertical layout if needed
+				},
 				prompt_position = "top",
-				width = { padding = 0 },
-				height = { padding = 0 },
-				preview_width = 0.4,
 			},
 			sorting_strategy = "ascending",
 		},
 		extensions = {
-			["lazygit"] = {
-				enable = true,
-			},
-			["file_browser"] = {
-				enable = true,
-			},
+			lazygit = {}, -- Extension configurations can be empty
+			file_browser = {},
 			["ui-select"] = {
-				enable = true,
-				themes.get_dropdown(),
+				themes.get_dropdown({
+					winblend = 10,
+					previewer = false,
+				}),
 			},
-			["zf-native"] = {
-				enable = true,
-			},
+			["zf-native"] = {},
+			-- Add more extensions here as needed
 		},
 	})
 
-	-- Load the extensions
+	-- Load extensions
 	telescope.load_extension("file_browser")
 	telescope.load_extension("ui-select")
 	telescope.load_extension("zf-native")
-	telescope.load_extension("rest")
-	telescope.load_extension("noice")
-	-- then use it, you can also use the `:Telescope rest select_env` command
-	-- telescope.extensions.rest.select_env()
-	-- telescope.load_extension("fzf")
 	telescope.load_extension("lazygit")
-	-- telescope.load_extension("undo")
 
 	-- Keymaps
 	vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })

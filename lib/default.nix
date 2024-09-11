@@ -63,8 +63,28 @@ rec {
       # Treesitter for better syntax highlighting
       vimPlugins.nvim-treesitter.withAllGrammars
       vimPlugins.nvim-treesitter-context
+      vimPlugins.nvim-treesitter-textobjects
+      vimPlugins.nvim-treesitter-parsers.c
+      vimPlugins.nvim-treesitter-parsers.regex
+      vimPlugins.nvim-treesitter-parsers.markdown
+      vimPlugins.nvim-treesitter-parsers.css
+      vimPlugins.nvim-treesitter-parsers.lua
+      vimPlugins.nvim-treesitter-parsers.vim
+      vimPlugins.nvim-treesitter-parsers.tsx
+      vimPlugins.nvim-treesitter-parsers.javascript
+      vimPlugins.nvim-treesitter-parsers.typescript
+      vimPlugins.nvim-treesitter-parsers.go
+      vimPlugins.nvim-treesitter-parsers.sql
+      vimPlugins.nvim-treesitter-parsers.nix
+      vimPlugins.nvim-treesitter-parsers.rust
+      vimPlugins.nvim-treesitter-parsers.html
+      vimPlugins.nvim-treesitter-parsers.bash
+      vimPlugins.nvim-treesitter-parsers.templ
+      vimPlugins.nvim-treesitter-parsers.python
 
       # Others
+      vimPlugins.dressing-nvim
+      vimPlugins.nvim-notify
       vimPlugins.lualine-nvim
       vimPlugins.mini-nvim
       vimPlugins.vim-fugitive

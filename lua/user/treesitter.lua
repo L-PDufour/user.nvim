@@ -2,10 +2,9 @@ local treesitter = require("nvim-treesitter.configs")
 local treesitter_context = require("treesitter-context")
 local M = {}
 
-local function init()
+function M.init()
 	treesitter.setup({
 		auto_install = false,
-		ensure_installed = { "html" },
 		highlight = { enable = true, additional_vim_regex_highlighting = false },
 		indent = { enable = true },
 		rainbow = { enable = true },
@@ -26,7 +25,5 @@ local function init()
 		},
 	})
 end
-
-M.init = init
 
 return M
