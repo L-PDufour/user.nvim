@@ -67,6 +67,7 @@ rec {
       vimPlugins.nvim-treesitter-parsers.c
       vimPlugins.nvim-treesitter-parsers.regex
       vimPlugins.nvim-treesitter-parsers.markdown
+      vimPlugins.nvim-treesitter-parsers.markdown_inline
       vimPlugins.nvim-treesitter-parsers.css
       vimPlugins.nvim-treesitter-parsers.lua
       vimPlugins.nvim-treesitter-parsers.vim
@@ -83,6 +84,8 @@ rec {
       vimPlugins.nvim-treesitter-parsers.python
 
       # Others
+      vimPlugins.glow-nvim
+      vimPlugins.markdown-nvim
       vimPlugins.dressing-nvim
       vimPlugins.nvim-notify
       vimPlugins.lualine-nvim
