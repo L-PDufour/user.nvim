@@ -2,60 +2,55 @@ local M = {}
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
-local themes = require("telescope.themes")
 
 local function init()
-	telescope.setup({
-		defaults = {
-			mappings = {
-				i = {
-					["<c-enter>"] = actions.to_fuzzy_refine,
-				},
-				n = {
-					["dd"] = actions.delete_buffer,
-				},
-			},
-			file_ignore_patterns = {
-				"node_modules",
-				".git",
-				".cache",
-				".vscode",
-				".idea",
-				".DS_Store",
-			},
-			layout_strategy = "horizontal",
-			layout_config = {
-				horizontal = {
-					preview_width = 0.5, -- Correct usage under horizontal layout
-					width = 0.9, -- Adjust width as needed
-					height = 0.9, -- Adjust height as needed
-				},
-				vertical = {
-					preview_height = 0.5, -- Use for vertical layout if needed
-				},
-				prompt_position = "top",
-			},
-			sorting_strategy = "ascending",
-		},
-		extensions = {
-			lazygit = {}, -- Extension configurations can be empty
-			file_browser = {},
-			["ui-select"] = {
-				themes.get_dropdown({
-					winblend = 10,
-					previewer = false,
-				}),
-			},
-			["zf-native"] = {},
-			-- Add more extensions here as needed
-		},
-	})
+    telescope.setup({
+        defaults = {
+            mappings = {
+                i = {
+                    ["<c-enter>"] = actions.to_fuzzy_refine,
+                },
+                n = {
+                    ["dd"] = actions.delete_buffer,
+                },
+            },
+            file_ignore_patterns = {
+                "node_modules",
+                ".git",
+                ".cache",
+                ".vscode",
+                ".idea",
+                ".DS_Store",
+            },
+            layout_strategy = "horizontal",
+            layout_config = {
+                horizontal = {
+                    preview_width = 0.5,
+                    width = 0.9,
+                    height = 0.9,
+                },
+                prompt_position = "top",
+            },
+            sorting_strategy = "ascending",
+        },
+        extensions = {
+            ["ui-select"] = {
+                require("telescope.themes").get_dropdown({
+                    winblend = 10,
+                    previewer = false,
+                }),
+            },
+            ["zf-native"] = {},
+        },
+    })
 
-	-- Load extensions
-	telescope.load_extension("file_browser")
-	telescope.load_extension("ui-select")
-	telescope.load_extension("zf-native")
-	telescope.load_extension("lazygit")
+    -- Load essential extensions
+    telescope.load_extension("ui-select")
+    telescope.load_extension("zf-native")
+
+    -- Keymaps (keep your existing keymaps)
+    -- ... (your existing keymaps here)
+
 
 	-- Keymaps
 	vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
