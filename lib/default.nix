@@ -84,10 +84,10 @@ rec {
       vimPlugins.nvim-treesitter-parsers.python
 
       # Others
-      vimPlugins.glow-nvim
-      vimPlugins.markdown-nvim
-      vimPlugins.dressing-nvim
-      vimPlugins.nvim-notify
+      # vimPlugins.glow-nvim
+      # vimPlugins.markdown-nvim
+      # vimPlugins.dressing-nvim
+      # vimPlugins.nvim-notify
       vimPlugins.lualine-nvim
       vimPlugins.mini-nvim
       vimPlugins.vim-fugitive
@@ -97,8 +97,8 @@ rec {
       vimPlugins.gitsigns-nvim
       vimPlugins.rest-nvim
       vimPlugins.undotree
-      vimPlugins.nui-nvim
-      vimPlugins.noice-nvim
+      # vimPlugins.nui-nvim
+      # vimPlugins.noice-nvim
 
       # Task
       vimPlugins.calendar-vim
