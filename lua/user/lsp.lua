@@ -1,10 +1,10 @@
 local M = {}
 
 function M.init()
-	local function setup_keymaps(event)
-		local map = function(keys, func, desc)
-			vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-		end
+local function setup_keymaps(client, bufnr)
+    local map = function(keys, func, desc)
+        vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+    end
 		map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 		map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 		map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
@@ -18,72 +18,49 @@ function M.init()
 		map("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 	end
 
-	local function setup_lsp_servers(capabilities)
-		local servers = {
-			gopls = {
-				filetypes = { "templ", "go" },
-			},
-			html = {
-				filetypes = { "html", "templ" },
-			},
-			htmx = {
-				filetypes = { "html", "templ" },
-			},
-			lua_ls = {
-				settings = {
-					Lua = {
-						completion = { callSnippet = "Replace" },
-						diagnostics = { disable = { "missing-fields" } },
-					},
-				},
-			},
-			nil_ls = { settings = { ["nil"] = {} } },
-			tailwindcss = {
-				filetypes = { "html", "templ", "astro", "javascript", "typescript", "react" },
-			},
-			templ = {},
-		}
-		for server_name, config in pairs(servers) do
-			config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+local function setup_lsp_servers()
+    local lspconfig = require("lspconfig")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local ok, lspconfig = pcall(require, "lspconfig")
-			if not ok then
-				print("Failed to require lspconfig")
-				return
-			end
+    local servers = {
+        gopls = { filetypes = { "templ", "go" } },
+        html = { filetypes = { "html", "templ" } },
+        htmx = { filetypes = { "html", "templ" } },
+        lua_ls = {
+            settings = {
+                Lua = {
+                    completion = { callSnippet = "Replace" },
+                    diagnostics = { disable = { "missing-fields" } },
+                },
+            },
+        },
+        nil_ls = { settings = { ["nil"] = {} } },
+        tailwindcss = {
+            filetypes = { "html", "templ", "astro", "javascript", "typescript", "react" },
+        },
+        templ = {},
+    }
 
-			local server = lspconfig[server_name]
-			if server then
-				local setup_ok, setup_error = pcall(server.setup, config)
-				if not setup_ok then
-					print("Failed to setup " .. server_name .. ": " .. setup_error)
-				end
-			else
-				print("LSP server " .. server_name .. " not found")
-			end
-		end
-	end
+    for server_name, config in pairs(servers) do
+        config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+        config.on_attach = setup_keymaps
+        lspconfig[server_name].setup(config)
+    end
+end
 	-- Create client capabilities
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+function M.init()
+    -- Setup typescript-tools
+    local ok, ts_tools = pcall(require, "typescript-tools")
+    if ok then
+        ts_tools.setup({
+            on_attach = setup_keymaps,
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        })
+    end
 
-	-- Setup typescript-tools
-	local ok, ts_tools = pcall(require, "typescript-tools")
-	if ok then
-		ts_tools.setup({
-			on_attach = setup_keymaps,
-			capabilities = capabilities,
-		})
-	end
-
-	-- Setup LspAttach autocmd
-	vim.api.nvim_create_autocmd("LspAttach", {
-		group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
-		callback = setup_keymaps,
-	})
-
-	-- Setup LSP handlers and servers
-	setup_lsp_servers(capabilities)
+    -- Setup LSP servers
+    setup_lsp_servers()
 end
 
 return M
+
