@@ -122,7 +122,11 @@ function M.init()
 	vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 	vim.keymap.set("n", "<leader>Q", vim.diagnostic.setqflist)
-
+	-- Swap ; and : globally
+	vim.keymap.set("n", ";", ":", { noremap = true })
+	vim.keymap.set("n", ":", ";", { noremap = true })
+	vim.keymap.set("v", ";", ":", { noremap = true })
+	vim.keymap.set("v", ":", ";", { noremap = true })
 	local normal_mode_mappings = {
 		-- Clear search results with Esc
 		["<Esc>"] = { ":noh<CR>", { noremap = true, silent = true } },

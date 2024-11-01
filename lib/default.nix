@@ -97,6 +97,9 @@ rec {
       vimPlugins.gitsigns-nvim
       vimPlugins.rest-nvim
       vimPlugins.undotree
+      vimPlugins.orgmode
+      vimPlugins.headlines-nvim
+
       # vimPlugins.nui-nvim
       # vimPlugins.noice-nvim
 
