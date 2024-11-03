@@ -1,20 +1,28 @@
 local M = {}
 
 local function setup_keymaps(client, bufnr)
+	local builtin = require("telescope.builtin")
 	local map = function(keys, func, desc)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
 	end
-	map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-	map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-	map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-	map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-	map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-	map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-	map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-	map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-	map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-	map("K", vim.lsp.buf.hover, "Hover Documentation")
-	map("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+	-- LSP finder shortcuts
+	map("<leader>ld", builtin.lsp_definitions, "[L]SP [D]efinition")
+	map("<leader>lr", builtin.lsp_references, "[L]SP [R]eferences")
+	map("<leader>li", builtin.lsp_implementations, "[L]SP [I]mplementation")
+	map("<leader>lt", builtin.lsp_type_definitions, "[L]SP [T]ype Definition")
+
+	-- Lmbols
+	map("<leader>ls", builtin.lsp_document_symbols, "[L]SP Document [S]ymbols")
+	map("<leader>lw", builtin.lsp_dynamic_workspace_symbols, "[L]SP [W]orkspace Symbols")
+
+	-- Ltions
+	map("<leader>ln", vim.lsp.buf.rename, "[L]SP Re[n]ame")
+	map("<leader>la", vim.lsp.buf.code_action, "[L]SP Code [A]ction")
+
+	-- Lformation
+	map("<leader>lk", vim.lsp.buf.hover, "[L]SP Hover Documentation")
+	map("<leader>lh", vim.lsp.buf.signature_help, "[L]SP Signature [H]elp")
+	map("<leader>lg", vim.lsp.buf.declaration, "[L]SP [G]o to Declaration")
 end
 
 local function setup_lsp_servers()
@@ -56,7 +64,21 @@ function M.init()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		})
 	end
-
+	-- local wk = require("which-key")
+	-- wk.add({
+	-- 	{ "<leader>l", group = "[L]SP" },
+	-- 	{ "<leader>la", desc = "Code Action" },
+	-- 	{ "<leader>ld", desc = "Definition" },
+	-- 	{ "<leader>lg", desc = "Go to Declaration" },
+	-- 	{ "<leader>lh", desc = "Signature Help" },
+	-- 	{ "<leader>li", desc = "Implementation" },
+	-- 	{ "<leader>lk", desc = "Hover Docs" },
+	-- 	{ "<leader>ln", desc = "Rename" },
+	-- 	{ "<leader>lr", desc = "References" },
+	-- 	{ "<leader>ls", desc = "Document Symbols" },
+	-- 	{ "<leader>lt", desc = "Type Definition" },
+	-- 	{ "<leader>lw", desc = "Workspace Symbols" },
+	-- })
 	-- Setup LSP servers
 	setup_lsp_servers()
 end

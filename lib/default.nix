@@ -3,6 +3,7 @@ let
   inherit (inputs.nixpkgs) legacyPackages;
 in
 rec {
+  # Plugin builder function
   mkVimPlugin =
     { system }:
     let
@@ -24,6 +25,8 @@ rec {
       '';
       src = ../.;
     };
+
+  # Core plugin list organized by functionality
   mkNeovimPlugins =
     { system }:
     let
@@ -32,14 +35,18 @@ rec {
       user-nvim = mkVimPlugin { inherit system; };
     in
     [
-      # LSP
+      # Core functionality
+      vimPlugins.plenary-nvim # Required by many plugins
+      vimPlugins.which-key-nvim # Key binding helper
+      vimPlugins.mini-nvim # Collection of minimal plugins
+      vimPlugins.better-escape-nvim
+
+      # LSP and Completion
       vimPlugins.nvim-lspconfig
       vimPlugins.luasnip
       vimPlugins.conform-nvim
       vimPlugins.lsp-format-nvim
       vimPlugins.typescript-tools-nvim
-
-      #CMP
       vimPlugins.nvim-cmp
       vimPlugins.cmp-nvim-lsp
       vimPlugins.cmp-cmdline
@@ -47,68 +54,56 @@ rec {
       vimPlugins.cmp-buffer
       vimPlugins.lspkind-nvim
 
-      # Fuzzy finding
-      vimPlugins.plenary-nvim
+      # Navigation and Search
       vimPlugins.telescope-nvim
       vimPlugins.telescope-ui-select-nvim
       vimPlugins.telescope-file-browser-nvim
-      # vimPlugins.telescope-fzf-native-nvim
       vimPlugins.telescope-zf-native-nvim
-      # Theme
-      vimPlugins.catppuccin-nvim
-      vimPlugins.tokyonight-nvim
-      # Git integration
-      vimPlugins.gitsigns-nvim
 
-      # Treesitter for better syntax highlighting
+      # Git Integration
+      vimPlugins.gitsigns-nvim
+      vimPlugins.vim-fugitive
+      vimPlugins.lazygit-nvim
+
+      # Syntax and Language Support
       vimPlugins.nvim-treesitter.withAllGrammars
       vimPlugins.nvim-treesitter-context
       vimPlugins.nvim-treesitter-textobjects
-      vimPlugins.nvim-treesitter-parsers.c
-      vimPlugins.nvim-treesitter-parsers.regex
-      vimPlugins.nvim-treesitter-parsers.markdown
-      vimPlugins.nvim-treesitter-parsers.markdown_inline
-      vimPlugins.nvim-treesitter-parsers.css
-      vimPlugins.nvim-treesitter-parsers.lua
-      vimPlugins.nvim-treesitter-parsers.vim
-      vimPlugins.nvim-treesitter-parsers.tsx
-      vimPlugins.nvim-treesitter-parsers.javascript
-      vimPlugins.nvim-treesitter-parsers.typescript
-      vimPlugins.nvim-treesitter-parsers.go
-      vimPlugins.nvim-treesitter-parsers.sql
-      vimPlugins.nvim-treesitter-parsers.nix
-      vimPlugins.nvim-treesitter-parsers.rust
-      vimPlugins.nvim-treesitter-parsers.html
-      vimPlugins.nvim-treesitter-parsers.bash
-      vimPlugins.nvim-treesitter-parsers.templ
-      vimPlugins.nvim-treesitter-parsers.python
+      (with vimPlugins.nvim-treesitter-parsers; [
+        c
+        regex
+        markdown
+        markdown_inline
+        css
+        lua
+        vim
+        tsx
+        javascript
+        typescript
+        go
+        sql
+        nix
+        rust
+        html
+        bash
+        templ
+        python
+      ])
 
-      # Others
-      # vimPlugins.glow-nvim
-      # vimPlugins.markdown-nvim
-      # vimPlugins.dressing-nvim
-      # vimPlugins.nvim-notify
+      # UI and Aesthetics
+      vimPlugins.catppuccin-nvim
       vimPlugins.lualine-nvim
-      vimPlugins.mini-nvim
-      vimPlugins.vim-fugitive
-      vimPlugins.better-escape-nvim
-      vimPlugins.which-key-nvim
-      vimPlugins.lazygit-nvim
-      vimPlugins.gitsigns-nvim
-      vimPlugins.rest-nvim
+
+      # Productivity Tools
       vimPlugins.undotree
       vimPlugins.orgmode
       vimPlugins.headlines-nvim
 
-      # vimPlugins.nui-nvim
-      # vimPlugins.noice-nvim
-
-      # Task
-      vimPlugins.calendar-vim
-
+      # User config
       user-nvim
     ];
 
+  # External tooling and language servers
   mkExtraPackages =
     { system }:
     let
@@ -118,30 +113,35 @@ rec {
       };
     in
     [
-      pkgs.gopls
-      pkgs.python3
-      pkgs.htmx-lsp
+      # Language Servers
+      # pkgs.gopls
+      # pkgs.htmx-lsp
       pkgs.lua-language-server
       pkgs.nil
+      # pkgs.tailwindcss-language-server
+      # pkgs.typescript-language-server
+      # pkgs.vscode-langservers-extracted
+
+      # Formatters and Linters
       pkgs.nixfmt-rfc-style
-      pkgs.nodePackages_latest.prettier
-      pkgs.prettierd
-      pkgs.ripgrep
+      # pkgs.nodePackages_latest.prettier
+      # pkgs.prettierd
       pkgs.stylua
-      pkgs.tailwindcss-language-server
-      pkgs.typescript-language-server
-      pkgs.vscode-langservers-extracted
-      pkgs.templ
+
+      # Tools
+      # pkgs.python3
+      pkgs.ripgrep
+      # pkgs.templ
     ];
 
   mkExtraConfig = ''
     lua << EOF
       require("user").init()
-    vim.cmd("set runtimepath+=./ftplugin")
-
+      vim.cmd("set runtimepath+=./ftplugin")
     EOF
   '';
 
+  # Neovim builder
   mkNeovim =
     { system }:
     let
@@ -160,7 +160,7 @@ rec {
       extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath extraPackages}"'';
     };
 
-  # You can keep this if you want to use it with home-manager
+  # Home Manager integration
   mkHomeManager =
     { system }:
     let

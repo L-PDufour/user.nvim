@@ -141,8 +141,8 @@ function M.init()
 		-- Save file with Space+s or Ctrl+s
 
 		-- Navigate to left/right window with leader key
-		["<leader>h"] = { "<C-w>h", { noremap = true, silent = true } }, -- Move to the left window
-		["<leader>l"] = { "<C-w>l", { noremap = true, silent = true } }, -- Move to the right window
+		-- ["<leader>h"] = { "<C-w>h", { noremap = true, silent = true } }, -- Move to the left window
+		-- ["<leader>l"] = { "<C-w>l", { noremap = true, silent = true } }, -- Move to the right window
 
 		-- Jump to the start/end of a line with H/L
 		["L"] = { "$", { noremap = true, silent = true } }, -- Jump to the end of the line
@@ -168,10 +168,10 @@ function M.init()
 		["n"] = { "nzzzv", { desc = "Next search result and center view" } },
 		["N"] = { "Nzzzv", { desc = "Previous search result and center view" } },
 		["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
-		["<leader>S"] = {
-			[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-			{ desc = "Search and replace word under cursor" },
-		},
+		-- ["<leader>S"] = {
+		-- 	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+		-- 	{ desc = "Search and replace word under cursor" },
+		-- },
 		-- ["<leader>x"] = { "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" } },
 		["<leader>gc"] = { "<cmd>colorscheme catppuccin<cr>", { desc = "set colorscheme" } },
 		["<leader>ut"] = { "<cmd>UndotreeToggle<cr>", { desc = "Undo Tree" } },
