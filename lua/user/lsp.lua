@@ -1,5 +1,3 @@
-local M = {}
-
 local function setup_keymaps(client, bufnr)
 	local builtin = require("telescope.builtin")
 	local map = function(keys, func, desc)
@@ -55,32 +53,28 @@ local function setup_lsp_servers()
 	end
 end
 -- Create client capabilities
-function M.init()
-	-- Setup typescript-tools
-	local ok, ts_tools = pcall(require, "typescript-tools")
-	if ok then
-		ts_tools.setup({
-			on_attach = setup_keymaps,
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
-		})
-	end
-	-- local wk = require("which-key")
-	-- wk.add({
-	-- 	{ "<leader>l", group = "[L]SP" },
-	-- 	{ "<leader>la", desc = "Code Action" },
-	-- 	{ "<leader>ld", desc = "Definition" },
-	-- 	{ "<leader>lg", desc = "Go to Declaration" },
-	-- 	{ "<leader>lh", desc = "Signature Help" },
-	-- 	{ "<leader>li", desc = "Implementation" },
-	-- 	{ "<leader>lk", desc = "Hover Docs" },
-	-- 	{ "<leader>ln", desc = "Rename" },
-	-- 	{ "<leader>lr", desc = "References" },
-	-- 	{ "<leader>ls", desc = "Document Symbols" },
-	-- 	{ "<leader>lt", desc = "Type Definition" },
-	-- 	{ "<leader>lw", desc = "Workspace Symbols" },
-	-- })
-	-- Setup LSP servers
-	setup_lsp_servers()
+-- Setup typescript-tools
+local ok, ts_tools = pcall(require, "typescript-tools")
+if ok then
+	ts_tools.setup({
+		on_attach = setup_keymaps,
+		capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	})
 end
-
-return M
+-- local wk = require("which-key")
+-- wk.add({
+-- 	{ "<leader>l", group = "[L]SP" },
+-- 	{ "<leader>la", desc = "Code Action" },
+-- 	{ "<leader>ld", desc = "Definition" },
+-- 	{ "<leader>lg", desc = "Go to Declaration" },
+-- 	{ "<leader>lh", desc = "Signature Help" },
+-- 	{ "<leader>li", desc = "Implementation" },
+-- 	{ "<leader>lk", desc = "Hover Docs" },
+-- 	{ "<leader>ln", desc = "Rename" },
+-- 	{ "<leader>lr", desc = "References" },
+-- 	{ "<leader>ls", desc = "Document Symbols" },
+-- 	{ "<leader>lt", desc = "Type Definition" },
+-- 	{ "<leader>lw", desc = "Workspace Symbols" },
+-- })
+-- Setup LSP servers
+setup_lsp_servers()

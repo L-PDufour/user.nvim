@@ -1,16 +1,10 @@
-local function init()
-	require("user.others").init() -- need to be first
-	require("user.autocmds").init()
-	require("user.cmp").init()
-	require("user.format").init()
-	require("user.lsp").init()
-	require("user.mini").init()
-	require("user.options").init()
-	-- require("user.org").init()
-	require("user.telescope").init()
-	require("user.treesitter").init()
-end
-
-return {
-	init = init,
-}
+require("user.others")
+require("user.autocmds")
+require("user.cmp")
+require("user.format")
+require("user.lsp")
+require("user.mini")
+require("user.options")
+require("user.org")
+require("user.telescope")
+require("user.treesitter")

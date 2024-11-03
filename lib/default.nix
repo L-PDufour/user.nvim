@@ -69,26 +69,24 @@ rec {
       vimPlugins.nvim-treesitter.withAllGrammars
       vimPlugins.nvim-treesitter-context
       vimPlugins.nvim-treesitter-textobjects
-      (with vimPlugins.nvim-treesitter-parsers; [
-        c
-        regex
-        markdown
-        markdown_inline
-        css
-        lua
-        vim
-        tsx
-        javascript
-        typescript
-        go
-        sql
-        nix
-        rust
-        html
-        bash
-        templ
-        python
-      ])
+      vimPlugins.nvim-treesitter-parsers.c
+      vimPlugins.nvim-treesitter-parsers.regex
+      vimPlugins.nvim-treesitter-parsers.markdown
+      vimPlugins.nvim-treesitter-parsers.markdown_inline
+      vimPlugins.nvim-treesitter-parsers.css
+      vimPlugins.nvim-treesitter-parsers.lua
+      vimPlugins.nvim-treesitter-parsers.vim
+      vimPlugins.nvim-treesitter-parsers.tsx
+      vimPlugins.nvim-treesitter-parsers.javascript
+      vimPlugins.nvim-treesitter-parsers.typescript
+      vimPlugins.nvim-treesitter-parsers.go
+      vimPlugins.nvim-treesitter-parsers.sql
+      vimPlugins.nvim-treesitter-parsers.nix
+      vimPlugins.nvim-treesitter-parsers.rust
+      vimPlugins.nvim-treesitter-parsers.html
+      vimPlugins.nvim-treesitter-parsers.bash
+      vimPlugins.nvim-treesitter-parsers.templ
+      vimPlugins.nvim-treesitter-parsers.python
 
       # UI and Aesthetics
       vimPlugins.catppuccin-nvim
@@ -136,7 +134,7 @@ rec {
 
   mkExtraConfig = ''
     lua << EOF
-      require("user").init()
+      require("user")
       vim.cmd("set runtimepath+=./ftplugin")
     EOF
   '';
