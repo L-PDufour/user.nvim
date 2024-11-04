@@ -2,9 +2,12 @@
 require("mini.statusline").setup()
 require("mini.pairs").setup()
 require("mini.surround").setup()
-require("mini.comment").setup()
-
--- Simplified starter configuration
+require("mini.comment").setup({})
+require("mini.jump2d").setup({
+	mappings = {
+		start_jumping = "f",
+	},
+})
 local starter = require("mini.starter")
 starter.setup({
 	items = { starter.sections.recent_files(10, true) },

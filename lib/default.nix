@@ -40,6 +40,7 @@ rec {
       vimPlugins.which-key-nvim # Key binding helper
       vimPlugins.mini-nvim # Collection of minimal plugins
       vimPlugins.better-escape-nvim
+      vimPlugins.nvim-web-devicons
 
       # LSP and Completion
       vimPlugins.nvim-lspconfig
@@ -58,18 +59,19 @@ rec {
       vimPlugins.telescope-nvim
       vimPlugins.telescope-ui-select-nvim
       vimPlugins.telescope-file-browser-nvim
-      vimPlugins.telescope-zf-native-nvim
+      vimPlugins.telescope-fzy-native-nvim
 
       # Git Integration
       vimPlugins.gitsigns-nvim
-      vimPlugins.vim-fugitive
       vimPlugins.lazygit-nvim
+      vimPlugins.diffview-nvim
 
       # Syntax and Language Support
       vimPlugins.nvim-treesitter.withAllGrammars
       vimPlugins.nvim-treesitter-context
       vimPlugins.nvim-treesitter-textobjects
       vimPlugins.nvim-treesitter-parsers.c
+      vimPlugins.nvim-treesitter-parsers.org
       vimPlugins.nvim-treesitter-parsers.regex
       vimPlugins.nvim-treesitter-parsers.markdown
       vimPlugins.nvim-treesitter-parsers.markdown_inline
@@ -90,7 +92,6 @@ rec {
 
       # UI and Aesthetics
       vimPlugins.catppuccin-nvim
-      vimPlugins.lualine-nvim
 
       # Productivity Tools
       vimPlugins.undotree

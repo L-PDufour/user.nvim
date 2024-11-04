@@ -8,6 +8,7 @@ local function setup_keymaps(client, bufnr)
 	map("<leader>lr", builtin.lsp_references, "[L]SP [R]eferences")
 	map("<leader>li", builtin.lsp_implementations, "[L]SP [I]mplementation")
 	map("<leader>lt", builtin.lsp_type_definitions, "[L]SP [T]ype Definition")
+	map("<leader>sd", builtin.diagnostics, "Diagnostics")
 
 	-- Lmbols
 	map("<leader>ls", builtin.lsp_document_symbols, "[L]SP Document [S]ymbols")
@@ -18,15 +19,34 @@ local function setup_keymaps(client, bufnr)
 	map("<leader>la", vim.lsp.buf.code_action, "[L]SP Code [A]ction")
 
 	-- Lformation
-	map("<leader>lk", vim.lsp.buf.hover, "[L]SP Hover Documentation")
-	map("<leader>lh", vim.lsp.buf.signature_help, "[L]SP Signature [H]elp")
+	map("K", vim.lsp.buf.hover, "[L]SP Hover Documentation")
 	map("<leader>lg", vim.lsp.buf.declaration, "[L]SP [G]o to Declaration")
 end
 
 local function setup_lsp_servers()
+	local border = {
+		{ "┌", "FloatBorder" },
+		{ "─", "FloatBorder" },
+		{ "┐", "FloatBorder" },
+		{ "│", "FloatBorder" },
+		{ "┘", "FloatBorder" },
+		{ "─", "FloatBorder" },
+		{ "└", "FloatBorder" },
+		{ "│", "FloatBorder" },
+	}
+	local handlers = {
+		["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+		["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+	}
 	local lspconfig = require("lspconfig")
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+	vim.diagnostic.config({
+		virtual_text = {
+			prefix = "■ ", -- Could be '●', '▎', 'x', '■', , 
+		},
+		float = { border = border },
+	})
 	local servers = {
 		gopls = { filetypes = { "templ", "go" } },
 		html = { filetypes = { "html", "templ" } },
@@ -49,6 +69,7 @@ local function setup_lsp_servers()
 	for server_name, config in pairs(servers) do
 		config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
 		config.on_attach = setup_keymaps
+		config.handlers = handlers
 		lspconfig[server_name].setup(config)
 	end
 end
@@ -61,20 +82,5 @@ if ok then
 		capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	})
 end
--- local wk = require("which-key")
--- wk.add({
--- 	{ "<leader>l", group = "[L]SP" },
--- 	{ "<leader>la", desc = "Code Action" },
--- 	{ "<leader>ld", desc = "Definition" },
--- 	{ "<leader>lg", desc = "Go to Declaration" },
--- 	{ "<leader>lh", desc = "Signature Help" },
--- 	{ "<leader>li", desc = "Implementation" },
--- 	{ "<leader>lk", desc = "Hover Docs" },
--- 	{ "<leader>ln", desc = "Rename" },
--- 	{ "<leader>lr", desc = "References" },
--- 	{ "<leader>ls", desc = "Document Symbols" },
--- 	{ "<leader>lt", desc = "Type Definition" },
--- 	{ "<leader>lw", desc = "Workspace Symbols" },
--- })
--- Setup LSP servers
+
 setup_lsp_servers()

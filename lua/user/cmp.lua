@@ -11,6 +11,7 @@ cmp.setup({
 	},
 	window = {
 		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.select_next_item(),
