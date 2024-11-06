@@ -1,7 +1,3 @@
--- AutoGroups
-vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-
--- AutoCmds
 -- Vertically center document when entering insert mode
 vim.api.nvim_create_autocmd("InsertEnter", {
 	command = "norm zz",
@@ -9,8 +5,8 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 
 -- Yank highlight
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = "YankHighlight",
-	pattern = "*",
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
 	end,

@@ -1,6 +1,7 @@
 -- Set leader keys
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g.have_nerd_font = true
 
 -- Enable 24-bit RGB color
 vim.o.termguicolors = true
@@ -77,17 +78,20 @@ vim.o.listchars = "tab:> ,extends:…,precedes:…,nbsp:␣" -- Define which hel
 vim.o.list = true -- Show some helper symbols
 vim.cmd([[syntax enable]])
 
-vim.g.clipboard = {
-	name = "OSC 52",
-	copy = {
-		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-	},
-	paste = {
-		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-	},
-}
+vim.schedule(function()
+	vim.opt.clipboard = "unnamedplus"
+end)
+-- vim.g.clipboard = {
+-- 	name = "OSC 52",
+-- 	copy = {
+-- 		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+-- 		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+-- 	},
+-- 	paste = {
+-- 		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+-- 		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+-- 	},
+-- }
 vim.keymap.set(
 	"n",
 	"<C-k>",
@@ -131,7 +135,7 @@ local normal_mode_mappings = {
 	["<C-u>"] = { "<C-u>zz", { desc = "Scroll up and center cursor" } },
 	["n"] = { "nzzzv", { desc = "Next search result and center view" } },
 	["N"] = { "Nzzzv", { desc = "Previous search result and center view" } },
-	["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
+	-- ["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
 	-- ["<leader>S"] = {
 	-- 	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
 	-- 	{ desc = "Search and replace word under cursor" },
@@ -151,8 +155,8 @@ local visual_mode_mappings = {
 	-- Move selected lines up/down in visual mode
 	["K"] = { ":m '<-2<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines up
 	["J"] = { ":m '>+1<CR>gv=gv", { noremap = true, silent = true } }, -- Move selected lines down
-	["<leader>y"] = { [["+y]], { desc = "Yank selection to system clipboard" } },
-	["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
+	-- ["<leader>y"] = { [["+y]], { desc = "Yank selection to system clipboard" } },
+	-- ["<leader>Y"] = { [["+Y]], { desc = "Yank line to system clipboard" } },
 	["<leader>d"] = { [["_d]], { desc = "Delete selection without yanking" } },
 }
 local shared_mappings = {
@@ -173,7 +177,7 @@ for key, value in pairs(shared_mappings) do
 	vim.keymap.set({ "n", "v" }, key, value[1], value[2])
 end
 -- mini.surround
-vim.keymap.set({ "n", "x" }, "s", "<Nop>")
+-- vim.keymap.set({ "n", "x" }, "s", "<Nop>")
 -- Move cursor in command-line mode
 -- Command line navigation
 vim.keymap.set("c", "<C-a>", "<Home>", { noremap = true }) -- Go to beginning of line
@@ -185,3 +189,21 @@ vim.keymap.set("c", "<C-h>", "<BS>", { noremap = true }) -- Delete character bef
 vim.keymap.set("c", "<C-w>", "<C-w>", { noremap = true }) -- Delete word before cursor
 vim.keymap.set("c", "<C-u>", "<C-u>", { noremap = true }) -- Delete to beginning of line
 vim.keymap.set("c", "<C-k>", '<C-\\>e("\\<C-E>\\<C-U>")<CR>', { noremap = true }) -- Delete to end of line
+
+-- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
+-- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- is not what someone will guess without a bit more experience.
+--
+-- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.filetype.add({
+	extension = {
+		templ = "html", -- Treat .templ files as HTML for now
+	},
+})
+vim.filetype.add({
+	extension = {
+		templ = "templ",
+	},
+})

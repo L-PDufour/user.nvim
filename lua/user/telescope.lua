@@ -47,11 +47,10 @@ telescope.setup({
 		["zf-native"] = {},
 	},
 })
-
 -- Load extensions
-telescope.load_extension("ui-select")
-telescope.load_extension("fzy_native")
-telescope.load_extension("file_browser")
+pcall(telescope.load_extension("ui-select"))
+pcall(telescope.load_extension("fzy_native"))
+pcall(telescope.load_extension("file_browser"))
 
 -- Helper searches
 vim.keymap.set("n", "<leader>hh", builtin.help_tags, { desc = "[H]elp tags" })
@@ -95,8 +94,3 @@ end, { desc = "Fuzzy search in current buffer" })
 
 -- Resume last search
 vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume last search" })
-
--- Create group labels for which-key (optional but recommended)
-vim.keymap.set("n", "<leader>h", "", { desc = "+[H]elp" })
-vim.keymap.set("n", "<leader>f", "", { desc = "+[F]ind" })
-vim.keymap.set("n", "<leader>s", "", { desc = "+[S]earch" })

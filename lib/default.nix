@@ -50,6 +50,7 @@ rec {
       vimPlugins.typescript-tools-nvim
       vimPlugins.nvim-cmp
       vimPlugins.cmp-nvim-lsp
+      vimPlugins.cmp_luasnip
       vimPlugins.cmp-cmdline
       vimPlugins.cmp-path
       vimPlugins.cmp-buffer
@@ -68,7 +69,6 @@ rec {
 
       # Syntax and Language Support
       vimPlugins.nvim-treesitter.withAllGrammars
-      vimPlugins.nvim-treesitter-context
       vimPlugins.nvim-treesitter-textobjects
       vimPlugins.nvim-treesitter-parsers.c
       vimPlugins.nvim-treesitter-parsers.org
