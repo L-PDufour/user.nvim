@@ -1,14 +1,32 @@
+local harpoon = require("harpoon")
+harpoon:setup()
+vim.keymap.set("n", "<leader>ha", function()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<leader>he", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+vim.keymap.set("n", "<A-C-j>", function()
+	harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<A-C-k>", function()
+	harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<A-C-l>", function()
+	harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<A-C-;>", function()
+	harpoon:list():select(4)
+end)
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<A-C-P>", function()
+	harpoon:list():prev()
+end)
+vim.keymap.set("n", "<A-C-N>", function()
+	harpoon:list():next()
+end)
 require("better_escape").setup()
-require("lazygit")
-require("gitsigns").setup({
-	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
-		delete = { text = "_" },
-		topdelete = { text = "‾" },
-		changedelete = { text = "~" },
-	},
-})
 require("which-key").setup({
 	plugins = {
 		marks = true,

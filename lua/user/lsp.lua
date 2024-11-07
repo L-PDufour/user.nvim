@@ -54,6 +54,35 @@ local ok, ts_tools = pcall(require, "typescript-tools")
 if ok then
 	ts_tools.setup({
 		capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		-- filetypes = { "javascript", "typescript", "html", "css" },
+		root_dir = function(...)
+			return require("lspconfig.util").root_pattern(".git")(...)
+		end,
+		single_file_support = false,
+		settings = {
+			typescript = {
+				inlayHints = {
+					includeInlayParameterNameHints = "literal",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = false,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
+				},
+			},
+			javascript = {
+				inlayHints = {
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
+				},
+			},
+		},
 	})
 end
 

@@ -45,6 +45,7 @@ rec {
       # LSP and Completion
       vimPlugins.nvim-lspconfig
       vimPlugins.luasnip
+      vimPlugins.friendly-snippets
       vimPlugins.conform-nvim
       vimPlugins.lsp-format-nvim
       vimPlugins.typescript-tools-nvim
@@ -61,6 +62,7 @@ rec {
       vimPlugins.telescope-ui-select-nvim
       vimPlugins.telescope-file-browser-nvim
       vimPlugins.telescope-fzy-native-nvim
+      vimPlugins.harpoon2
 
       # Git Integration
       vimPlugins.gitsigns-nvim
