@@ -36,6 +36,14 @@ local function setup_lsp_servers()
 		},
 		nil_ls = { settings = { ["nil"] = {} } },
 		tailwindcss = {
+			root_dir = function(fname)
+				local root_pattern = require("lspconfig").util.root_pattern(
+					"tailwind.config.cjs",
+					"tailwind.config.js",
+					"postcss.config.js"
+				)
+				return root_pattern(fname)
+			end,
 			filetypes = { "html", "templ", "astro", "javascript", "typescript", "react" },
 			init_options = { userLanguages = { templ = "html" } },
 		},
