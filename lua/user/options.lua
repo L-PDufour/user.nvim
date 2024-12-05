@@ -16,7 +16,6 @@ vim.cmd.colorscheme("catppuccin")
 vim.o.updatetime = 100 -- Faster completion
 
 -- Line numbers
-vim.o.relativenumber = true -- Relative line numbers
 vim.o.number = true -- Display the absolute line number of the current line
 
 -- Buffer settings

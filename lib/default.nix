@@ -38,6 +38,7 @@ rec {
       # Core functionality
       vimPlugins.plenary-nvim # Required by many plugins
       vimPlugins.which-key-nvim # Key binding helper
+      vimPlugins.trouble-nvim
       vimPlugins.mini-nvim # Collection of minimal plugins
       vimPlugins.better-escape-nvim
       vimPlugins.nvim-web-devicons
