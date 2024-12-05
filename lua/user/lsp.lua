@@ -23,6 +23,7 @@ local function setup_lsp_servers()
 		float = { border = border },
 	})
 	local servers = {
+		clangd = {},
 		gopls = { filetypes = { "templ", "go" } },
 		html = { filetypes = { "html", "templ" } },
 		htmx = { filetypes = { "html", "templ" } },
@@ -106,6 +107,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 		end
 
+		map("<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Show LSP signature help")
+
+		map("[d", vim.diagnostic.goto_prev, "goto_prev")
+		map("]d", vim.diagnostic.goto_next, "goto_next")
 		-- LSP finder shortcuts
 		map("<leader>ld", builtin.lsp_definitions, "[L]SP [D]efinition")
 		map("<leader>lr", builtin.lsp_references, "[L]SP [R]eferences")
@@ -113,15 +118,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>lt", builtin.lsp_type_definitions, "[L]SP [T]ype Definition")
 		map("<leader>sd", builtin.diagnostics, "Diagnostics")
 
-		-- Lmbols
 		map("<leader>ls", builtin.lsp_document_symbols, "[L]SP Document [S]ymbols")
 		map("<leader>lw", builtin.lsp_dynamic_workspace_symbols, "[L]SP [W]orkspace Symbols")
 
-		-- Ltions
 		map("<leader>ln", vim.lsp.buf.rename, "[L]SP Re[n]ame")
 		map("<leader>la", vim.lsp.buf.code_action, "[L]SP Code [A]ction")
 
-		-- Lformation
 		map("K", vim.lsp.buf.hover, "[L]SP Hover Documentation")
 		map("<leader>lg", vim.lsp.buf.declaration, "[L]SP [G]o to Declaration")
 		local client = vim.lsp.get_client_by_id(event.data.client_id)

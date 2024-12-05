@@ -2,15 +2,17 @@ local telescope = require("telescope")
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 local themes = require("telescope.themes")
-
+local open_with_trouble = require("trouble.sources.telescope").open
 telescope.setup({
 	defaults = {
 		mappings = {
 			i = {
 				["<c-enter>"] = actions.to_fuzzy_refine,
+				["<c-t>"] = open_with_trouble,
 			},
 			n = {
 				["dd"] = actions.delete_buffer,
+				["<c-t>"] = open_with_trouble,
 			},
 		},
 		pickers = {

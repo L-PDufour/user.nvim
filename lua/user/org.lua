@@ -1,6 +1,7 @@
 require("orgmode").setup({
-	org_agenda_files = { "~/org/*" },
-	org_default_notes_file = "~/org/refile.org",
+	org_agenda_files = { "~/Sync/org/**/**" },
+	org_default_notes_file = "~/Sync/org/refile.org",
+	win_split_mode = "auto",
 	-- Emacs-like keybindings
 	mappings = {
 		global = {
@@ -12,12 +13,12 @@ require("orgmode").setup({
 		t = {
 			description = "Todo",
 			template = "* TODO %?\n  %u",
-			target = "~/org/todos.org",
+			target = "~/Sync/org/todos.org",
 		},
 		j = {
 			description = "Journal",
 			template = "* %<%Y-%m-%d> %?\n",
-			target = "~/org/journal.org",
+			target = "~/Sync/org/journal.org",
 		},
 	},
 })

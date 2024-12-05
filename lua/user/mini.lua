@@ -15,5 +15,25 @@ require("mini.jump2d").setup({
 })
 local starter = require("mini.starter")
 starter.setup({
-	items = { starter.sections.recent_files(10, true) },
+	items = {
+		starter.sections.recent_files(10, true),
+		{
+			name = "Org",
+			action = function()
+				require("telescope.builtin").find_files({
+					cwd = vim.fn.expand("~/Sync/org"),
+				})
+			end,
+			section = "Config",
+		},
+		{
+			name = "Neovim Config",
+			action = function()
+				require("telescope.builtin").find_files({
+					cwd = vim.fn.expand("~/Documents/nvim"),
+				})
+			end,
+			section = "Config",
+		},
+	},
 })

@@ -39,6 +39,7 @@ rec {
       vimPlugins.plenary-nvim # Required by many plugins
       vimPlugins.which-key-nvim # Key binding helper
       vimPlugins.trouble-nvim
+      vimPlugins.lazydev-nvim
       vimPlugins.mini-nvim # Collection of minimal plugins
       vimPlugins.better-escape-nvim
       vimPlugins.nvim-web-devicons
@@ -74,7 +75,6 @@ rec {
       vimPlugins.nvim-treesitter.withAllGrammars
       vimPlugins.nvim-treesitter-textobjects
       vimPlugins.nvim-treesitter-parsers.c
-      vimPlugins.nvim-treesitter-parsers.org
       vimPlugins.nvim-treesitter-parsers.regex
       vimPlugins.nvim-treesitter-parsers.markdown
       vimPlugins.nvim-treesitter-parsers.markdown_inline
