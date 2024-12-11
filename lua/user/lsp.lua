@@ -112,14 +112,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("[d", vim.diagnostic.goto_prev, "goto_prev")
 		map("]d", vim.diagnostic.goto_next, "goto_next")
 		-- LSP finder shortcuts
-		map("<leader>ld", builtin.lsp_definitions, "[L]SP [D]efinition")
+		map("<leader>lD", builtin.lsp_definitions, "[L]SP [D]efinition")
 		map("<leader>lr", builtin.lsp_references, "[L]SP [R]eferences")
 		map("<leader>li", builtin.lsp_implementations, "[L]SP [I]mplementation")
 		map("<leader>lt", builtin.lsp_type_definitions, "[L]SP [T]ype Definition")
-		map("<leader>sd", builtin.diagnostics, "Diagnostics")
+		map("<leader>ld", builtin.diagnostics, "Diagnostics")
 
-		map("<leader>ls", builtin.lsp_document_symbols, "[L]SP Document [S]ymbols")
-		map("<leader>lw", builtin.lsp_dynamic_workspace_symbols, "[L]SP [W]orkspace Symbols")
+		map("<leader>ls", builtin.lsp_document_symbols, "[L]SP Document [s]ymbols")
+		map("<leader>lS", builtin.lsp_dynamic_workspace_symbols, "[L]SP workspace [S]ymbols")
 
 		map("<leader>ln", vim.lsp.buf.rename, "[L]SP Re[n]ame")
 		map("<leader>la", vim.lsp.buf.code_action, "[L]SP Code [A]ction")

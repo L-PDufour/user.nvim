@@ -9,13 +9,12 @@ telescope.setup({
 		mappings = {
 			i = {
 				["<c-enter>"] = actions.to_fuzzy_refine,
-				["<Tab>"] = actions.toggle_preview,
+				["<C-s>"] = require("telescope.actions.layout").toggle_preview,
 				["<c-t>"] = open_with_trouble,
 			},
 			n = {
-				["<c-enter>"] = actions.to_fuzzy_refine,
 				["dd"] = actions.delete_buffer,
-				["<Tab>"] = actions.toggle_preview,
+				["<C-s>"] = require("telescope.actions.layout").toggle_preview,
 				["<c-t>"] = open_with_trouble,
 			},
 		},
@@ -52,15 +51,14 @@ vim.keymap.set("n", "<leader>hk", builtin.keymaps, { desc = "[H]elp [K]eymaps" }
 vim.keymap.set("n", "<leader>ht", builtin.builtin, { desc = "[H]elp [T]elescope commands" })
 
 -- File navigation
-vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "[F]ind [F]iles" })
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
-vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "[F]ind [R]ecent files" })
+vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "[F]ind [g]it" })
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [f]iles" })
 vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[F]ind [B]uffers" })
 vim.keymap.set(
 	"n",
 	"<leader>fd",
 	"<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
-	{ noremap = true, silent = true, desc = "[F]ile [E]xplorer" }
+	{ noremap = true, silent = true, desc = "[F]ind [d]irectory" }
 )
 
 -- Open the location list with diagnostics
@@ -69,19 +67,11 @@ vim.keymap.set("n", "<leader>qf", builtin.quickfix)
 -- Open the quickfix list with diagnostics
 vim.keymap.set("n", "<leader>ql", builtin.loclist)
 -- Search
-vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-vim.keymap.set("n", "<leader>fa", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-vim.keymap.set("n", "<leader>s/", function()
-	builtin.live_grep({
-		grep_open_files = true,
-		prompt_title = "Live Grep in Open Files",
-	})
-end, { desc = "[S]earch in Open Files" })
-
--- Buffer search
+vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind [w]ord" })
+vim.keymap.set("n", "<leader>fa", builtin.live_grep, { desc = "[F]ind [a]ll" })
 vim.keymap.set("n", "<leader>/", function()
 	builtin.current_buffer_fuzzy_find()
 end, { desc = "Fuzzy search in current buffer" })
 
 -- Resume last search
-vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume last search" })
+vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]ind [r]esume" })

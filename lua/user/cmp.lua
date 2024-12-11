@@ -15,8 +15,8 @@ cmp.setup({
 	},
 	completion = { completeopt = "menu,menuone,noinsert" },
 	mapping = cmp.mapping.preset.insert({
-		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<C-p>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
@@ -33,10 +33,11 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
+		{ name = "lazydev", group_index = 0 },
+		{ name = "nvim_lsp", group_index = 1 },
+		{ name = "luasnip", group_index = 2 },
+		{ name = "buffer", group_index = 3 },
+		{ name = "path", group_index = 4 },
 		{ name = "orgmode" },
 	}),
 })
