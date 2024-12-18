@@ -46,6 +46,7 @@ rec {
 
       # LSP and Completion
       vimPlugins.nvim-lspconfig
+      vimPlugins.blink-cmp
       vimPlugins.luasnip
       vimPlugins.friendly-snippets
       vimPlugins.conform-nvim
