@@ -62,8 +62,7 @@ end
 local ok, ts_tools = pcall(require, "typescript-tools")
 if ok then
 	ts_tools.setup({
-		capabilities = require("cmp_nvim_lsp").default_capabilities(),
-		-- filetypes = { "javascript", "typescript", "html", "css" },
+		capabilities = require("blink.cmp").get_lsp_capabilities(), -- filetypes = { "javascript", "typescript", "html", "css" },
 		root_dir = function(...)
 			return require("lspconfig.util").root_pattern(".git")(...)
 		end,
